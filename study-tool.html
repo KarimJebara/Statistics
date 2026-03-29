@@ -1,0 +1,2657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StatMaster — Statistics 2526 Exam Mastery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   STATMASTER — Premium Statistics Exam Study Tool
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a0c14;
+  --bg2: #0f1119;
+  --surface: rgba(22, 26, 40, 0.85);
+  --surface-solid: #161a28;
+  --surface2: rgba(30, 35, 52, 0.9);
+  --surface3: rgba(38, 44, 65, 0.7);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --border3: rgba(255,255,255,0.18);
+  --text: #f0f2f8;
+  --text2: #8b93a8;
+  --text3: #5a6278;
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.10);
+  --blue-glow: rgba(96,165,250,0.20);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.10);
+  --purple-glow: rgba(167,139,250,0.20);
+  --green: #34d399;
+  --green-dim: rgba(52,211,153,0.10);
+  --green-glow: rgba(52,211,153,0.20);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.10);
+  --orange: #fbbf24;
+  --orange-dim: rgba(251,191,36,0.10);
+  --grad: linear-gradient(135deg, #60a5fa, #a78bfa);
+  --grad-subtle: linear-gradient(135deg, rgba(96,165,250,0.12), rgba(167,139,250,0.06));
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+  --shadow: 0 4px 32px rgba(0,0,0,0.4);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.5);
+  --glass: blur(20px) saturate(180%);
+  --font: 'Inter', -apple-system, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(96,165,250,0.06), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 90%, rgba(167,139,250,0.04), transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+button { cursor: pointer; font-family: inherit; }
+a { color: var(--blue); text-decoration: none; }
+
+/* ---- LAYOUT: SIDEBAR + MAIN ---- */
+.app {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 260px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.sidebar-brand {
+  padding: 28px 24px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-brand h2 {
+  font-size: 18px;
+  font-weight: 800;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+.sidebar-brand span {
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: block;
+  margin-top: 4px;
+}
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  overflow-y: auto;
+}
+.sidebar-nav button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text2);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-bottom: 4px;
+  position: relative;
+  text-align: left;
+}
+.sidebar-nav button:hover {
+  background: var(--surface2);
+  color: var(--text);
+}
+.sidebar-nav button.active {
+  background: var(--blue-dim);
+  color: var(--blue);
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(96,165,250,0.15);
+}
+.sidebar-nav button .icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.sidebar-nav button .check {
+  position: absolute;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--green-dim);
+  color: var(--green);
+  font-size: 10px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.sidebar-nav button.completed .check { display: flex; }
+
+.sidebar-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* MOBILE TOGGLE */
+.mobile-toggle {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--text);
+  font-size: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.mobile-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 99;
+}
+
+/* MAIN CONTENT */
+.main {
+  flex: 1;
+  margin-left: 260px;
+  min-height: 100vh;
+}
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 32px 100px;
+}
+.section { display: none; }
+.section.active { display: block; animation: fadeUp 0.35s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+/* ---- TYPOGRAPHY ---- */
+h1 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+h1 .gradient {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 36px 0 16px;
+  color: var(--blue);
+  letter-spacing: -0.3px;
+}
+h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 28px 0 12px;
+  color: var(--purple);
+}
+p { color: var(--text2); margin-bottom: 12px; }
+.subtitle {
+  color: var(--text2);
+  font-size: 15px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+/* ---- GLASS CARDS ---- */
+.card {
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.card:hover { border-color: var(--border2); }
+.card.correct {
+  border-color: var(--green);
+  background: var(--green-dim);
+  box-shadow: 0 0 20px rgba(52,211,153,0.08);
+}
+.card.wrong {
+  border-color: var(--red);
+  background: var(--red-dim);
+  box-shadow: 0 0 20px rgba(248,113,113,0.08);
+}
+
+/* ---- BUTTONS ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  background: var(--surface2);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  box-shadow: 0 0 16px rgba(96,165,250,0.08);
+  transform: translateY(-1px);
+}
+.btn.primary {
+  background: var(--grad);
+  color: #000;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(96,165,250,0.25);
+}
+.btn.primary:hover {
+  box-shadow: 0 6px 24px rgba(96,165,250,0.35);
+  transform: translateY(-2px);
+}
+.btn.success { background: var(--green); color: #000; border-color: var(--green); font-weight: 600; }
+.btn.danger { background: var(--red); color: #000; border-color: var(--red); font-weight: 600; }
+.btn-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.btn-grid .btn { flex: 1; min-width: 140px; text-align: center; }
+
+/* ---- PROGRESS BAR ---- */
+.progress-wrap {
+  background: rgba(255,255,255,0.04);
+  border-radius: 99px;
+  height: 6px;
+  margin: 16px 0;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--grad);
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 12px rgba(96,165,250,0.3);
+}
+
+/* ---- SCORE BADGE ---- */
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: var(--mono);
+}
+.score-badge.good { background: var(--green-dim); color: var(--green); }
+.score-badge.mid { background: var(--orange-dim); color: var(--orange); }
+.score-badge.bad { background: var(--red-dim); color: var(--red); }
+
+/* ---- FLASHCARD ---- */
+.flashcard-container { perspective: 1000px; margin-bottom: 16px; }
+.flashcard {
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 48px 40px;
+  text-align: center;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+}
+.flashcard:hover {
+  border-color: var(--purple);
+  box-shadow: 0 0 32px rgba(167,139,250,0.08);
+  transform: translateY(-2px);
+}
+.flashcard .prompt {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--text);
+}
+.flashcard .answer {
+  font-size: 18px;
+  color: var(--green);
+  margin-top: 16px;
+  display: none;
+  font-family: var(--mono);
+  font-weight: 500;
+  line-height: 1.6;
+  padding: 16px 20px;
+  background: var(--green-dim);
+  border-radius: var(--radius-sm);
+}
+.flashcard.revealed .answer { display: block; animation: fadeUp 0.3s ease; }
+.flashcard .hint {
+  color: var(--text3);
+  font-size: 13px;
+  margin-top: 12px;
+}
+.flashcard.revealed .hint { display: none; }
+.fc-keys {
+  text-align: center;
+  color: var(--text3);
+  font-size: 12px;
+  margin-top: 12px;
+  padding: 8px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.fc-keys strong { color: var(--text2); }
+
+/* ---- STORY BLOCKS ---- */
+.story-block {
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  border-top: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.story-block.insight { border-left-color: var(--purple); }
+.story-block.warning { border-left-color: var(--orange); }
+.story-block.trap { border-left-color: var(--red); }
+.story-block.example { border-left-color: var(--green); }
+.story-block .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+.story-block.insight .label { color: var(--purple); }
+.story-block.warning .label { color: var(--orange); }
+.story-block.trap .label { color: var(--red); }
+.story-block.example .label { color: var(--green); }
+
+.story-block p { color: var(--text2); }
+.story-block strong { color: var(--text); }
+.story-block li { color: var(--text2); margin-bottom: 4px; }
+.story-block li strong { color: var(--text); }
+
+/* ---- CHAPTER NAV ---- */
+.chapter-nav {
+  display: flex;
+  gap: 6px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+.chapter-nav button {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  color: var(--text2);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.chapter-nav button:hover { border-color: var(--border3); color: var(--text); }
+.chapter-nav button.active {
+  border-color: var(--purple);
+  color: var(--purple);
+  background: var(--purple-dim);
+  box-shadow: 0 0 12px rgba(167,139,250,0.08);
+}
+.chapter-nav button.done {
+  border-color: var(--green);
+  color: var(--green);
+  background: var(--green-dim);
+}
+
+/* ---- EXAM SIM ---- */
+.exam-q {
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 24px;
+}
+.exam-q .q-num {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.exam-q .q-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text);
+  line-height: 1.6;
+}
+.exam-q p { color: var(--text); margin-bottom: 12px; }
+.exam-q textarea, .exam-q input[type=text] {
+  width: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition: all 0.3s;
+  line-height: 1.6;
+}
+.exam-q textarea:focus, .exam-q input[type=text]:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(96,165,250,0.1);
+}
+.exam-q textarea { min-height: 90px; }
+.exam-q textarea.graded-correct, .exam-q input.graded-correct { border-color: var(--green); box-shadow: 0 0 12px rgba(52,211,153,0.1); }
+.exam-q textarea.graded-wrong, .exam-q input.graded-wrong { border-color: var(--red); box-shadow: 0 0 12px rgba(248,113,113,0.1); }
+.exam-q select {
+  padding: 10px 16px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  transition: all 0.3s;
+}
+.exam-q select:focus { outline: none; border-color: var(--blue); }
+.solution {
+  display: none;
+  background: var(--green-dim);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-top: 16px;
+}
+.solution.visible { display: block; animation: fadeUp 0.3s ease; }
+.solution h4 { color: var(--green); margin-bottom: 10px; font-size: 14px; letter-spacing: 0.5px; text-transform: uppercase; }
+.solution p { color: var(--text); }
+
+/* ---- DASHBOARD ---- */
+.hero-section {
+  background: var(--grad-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-bottom: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(96,165,250,0.08), transparent 70%);
+  pointer-events: none;
+}
+.hero-section h1 { position: relative; }
+.hero-section .subtitle { position: relative; margin-bottom: 0; }
+
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.dash-card {
+  background: var(--surface);
+  backdrop-filter: var(--glass);
+  -webkit-backdrop-filter: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 20px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.dash-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--grad);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.dash-card:hover { border-color: var(--border2); transform: translateY(-2px); }
+.dash-card:hover::before { opacity: 1; }
+.dash-card.complete {
+  border-color: rgba(52,211,153,0.3);
+}
+.dash-card.complete::before {
+  background: var(--green);
+  opacity: 1;
+}
+.dash-card .number {
+  font-size: 36px;
+  font-weight: 800;
+  font-family: var(--mono);
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.dash-card.complete .number {
+  background: linear-gradient(135deg, var(--green), #6ee7b7);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+.dash-card .label {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* ---- TABLE ---- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+th {
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ---- RESULTS ---- */
+.results-overlay { text-align: center; padding: 40px; }
+.results-overlay h3 { margin-bottom: 16px; font-size: 24px; }
+
+/* ---- TAGS ---- */
+.tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.tag.easy { background: var(--green-dim); color: var(--green); }
+.tag.medium { background: var(--orange-dim); color: var(--orange); }
+.tag.hard { background: var(--red-dim); color: var(--red); }
+
+/* ---- UTILITIES ---- */
+.mt { margin-top: 16px; }
+.mb { margin-bottom: 16px; }
+.formula {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 18px;
+  font-family: var(--mono);
+  font-size: 14px;
+  margin: 10px 0;
+  display: inline-block;
+  color: var(--text);
+}
+.highlight { color: var(--orange); font-weight: 700; }
+.hidden { display: none !important; }
+.fade-in { animation: fadeUp 0.35s ease; }
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .mobile-toggle { display: flex; }
+  .mobile-overlay.open { display: block; }
+  .main { margin-left: 0; }
+  .container { padding: 24px 16px 80px; padding-top: 72px; }
+  h1 { font-size: 24px; }
+  .dash-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-section { padding: 24px 20px; }
+  .exam-q { padding: 20px; }
+  .flashcard { padding: 32px 24px; }
+  .btn-grid .btn { min-width: 120px; font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .dash-card { padding: 16px 12px; }
+  .dash-card .number { font-size: 28px; }
+  .chapter-nav { gap: 4px; }
+  .chapter-nav button { padding: 6px 12px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<!-- MOBILE TOGGLE -->
+<button class="mobile-toggle" onclick="toggleSidebar()">&#9776;</button>
+<div class="mobile-overlay" id="mobile-overlay" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR NAVIGATION -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <h2>StatMaster</h2>
+    <span>Statistics 2526</span>
+  </div>
+  <nav class="sidebar-nav" id="nav">
+    <button onclick="showSection('dashboard')" class="active" data-section="dashboard">
+      <span class="icon">&#9635;</span> Dashboard
+      <span class="check">&#10003;</span>
+    </button>
+    <button onclick="showSection('story')" data-section="story">
+      <span class="icon">&#9733;</span> The Story
+      <span class="check">&#10003;</span>
+    </button>
+    <button onclick="showSection('test-trainer')" data-section="test-trainer">
+      <span class="icon">&#9881;</span> Test Selector
+      <span class="check">&#10003;</span>
+    </button>
+    <button onclick="showSection('flashcards')" data-section="flashcards">
+      <span class="icon">&#9829;</span> Formulas
+      <span class="check">&#10003;</span>
+    </button>
+    <button onclick="showSection('truefalse')" data-section="truefalse">
+      <span class="icon">&#10004;</span> True / False
+      <span class="check">&#10003;</span>
+    </button>
+    <button onclick="showSection('exam-sim')" data-section="exam-sim">
+      <span class="icon">&#9998;</span> Exam Simulator
+      <span class="check">&#10003;</span>
+    </button>
+  </nav>
+  <div class="sidebar-footer">
+    Built from 10 lectures &amp; 3 past exams
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+<div class="container">
+
+<!-- ==================== DASHBOARD ==================== -->
+<div class="section active" id="dashboard">
+  <div class="hero-section">
+    <h1><span class="gradient">Statistics 2526</span> Exam Mastery</h1>
+    <p class="subtitle">Your complete interactive study system — everything you need in one place. Start with The Story, drill with practice tools, finish with the Exam Simulator.</p>
+  </div>
+
+  <div class="dash-grid" id="dash-grid">
+    <div class="dash-card" id="dc-story"><div class="number" id="d-story">0/9</div><div class="label">Chapters Read</div></div>
+    <div class="dash-card" id="dc-tests"><div class="number" id="d-tests">0/15</div><div class="label">Test Selector</div></div>
+    <div class="dash-card" id="dc-formulas"><div class="number" id="d-formulas">0/16</div><div class="label">Formulas Known</div></div>
+    <div class="dash-card" id="dc-tf"><div class="number" id="d-tf">0/20</div><div class="label">True/False</div></div>
+  </div>
+
+  <h2>Exam Blueprint</h2>
+  <div class="card">
+    <table>
+      <tr><th>Q</th><th>Topic</th><th>Points</th><th>Priority</th></tr>
+      <tr><td>1</td><td>Sampling &amp; Bias</td><td>2</td><td><span class="tag medium">Medium</span></td></tr>
+      <tr><td>2</td><td>Choosing the Right Test</td><td>2</td><td><span class="tag hard">High</span></td></tr>
+      <tr><td>3</td><td>Regression</td><td>2-2.5</td><td><span class="tag hard">Highest</span></td></tr>
+      <tr><td>4</td><td>Hypothesis Test / Sample Size</td><td>1.5-2</td><td><span class="tag medium">Medium</span></td></tr>
+      <tr><td>5</td><td>Contingency Tables / Chi-squared</td><td>1.5-2</td><td><span class="tag medium">Medium</span></td></tr>
+      <tr><td>6-7</td><td>Concept Questions</td><td>1-1.5 each</td><td><span class="tag easy">Know it</span></td></tr>
+    </table>
+  </div>
+
+  <div class="story-block warning mt">
+    <div class="label">Recommended Study Order</div>
+    <strong>Start with "The Story"</strong> — it teaches everything from scratch in a connected narrative. Each chapter builds on the last. Then drill with Test Selector, Formulas, and True/False. Finish with the Exam Simulator to test yourself under exam conditions.
+  </div>
+</div>
+
+<!-- ==================== THE STORY ==================== -->
+<div class="section" id="story">
+  <h1>The Story of <span class="gradient">Statistics</span></h1>
+  <p class="subtitle">9 chapters — each builds on the last. This is your complete study source. Everything connects. Read in order.</p>
+
+  <div class="chapter-nav" id="chapter-nav"></div>
+  <div id="story-content"></div>
+</div>
+
+<!-- ==================== TEST SELECTOR TRAINER ==================== -->
+<div class="section" id="test-trainer">
+  <h1>Test Selection <span class="gradient">Trainer</span></h1>
+  <p class="subtitle">The exam gives you scenarios — you pick the right test. This is Q2 (2 points). Drill until it's automatic.</p>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div id="tt-progress-text" style="font-weight:600;">Question 1 of 15</div>
+    <div id="tt-score" class="score-badge mid">0/0</div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="tt-bar" style="width:0%"></div></div>
+
+  <div id="tt-card-wrap">
+    <div class="card" id="tt-card">
+      <div id="tt-scenario" style="font-size:17px;font-weight:600;margin-bottom:8px;color:var(--text);"></div>
+      <div id="tt-hint" style="color:var(--text3);font-size:14px;margin-bottom:16px;font-style:italic;"></div>
+      <div class="btn-grid" id="tt-buttons"></div>
+      <div id="tt-feedback" style="margin-top:16px;display:none;padding:16px;border-radius:var(--radius-sm);"></div>
+    </div>
+    <button class="btn primary mt" id="tt-next" style="display:none;" onclick="ttNext()">Next Question &rarr;</button>
+  </div>
+  <div id="tt-results" class="card results-overlay hidden">
+    <h3 id="tt-results-title" style="color:var(--green);"></h3>
+    <p id="tt-results-text"></p>
+    <button class="btn primary mt" onclick="ttRestart()">Restart (Shuffled)</button>
+  </div>
+</div>
+
+<!-- ==================== FLASHCARDS ==================== -->
+<div class="section" id="flashcards">
+  <h1>Formula <span class="gradient">Flashcards</span></h1>
+  <p class="subtitle">Click or press Space to reveal. Rate yourself honestly — spaced repetition works best when you're truthful.</p>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div id="fc-progress-text" style="font-weight:600;">Card 1 of 16</div>
+    <div id="fc-score" class="score-badge mid">0 known</div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="fc-bar" style="width:0%"></div></div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" id="fc-card" onclick="fcReveal()">
+      <div class="prompt" id="fc-prompt"></div>
+      <div class="hint" id="fc-hint">Click or press Space to reveal</div>
+      <div class="answer" id="fc-answer"></div>
+    </div>
+  </div>
+  <div id="fc-btns" style="display:none;margin-top:16px;text-align:center;">
+    <button class="btn success" onclick="fcRate(true)">&larr; Got it</button>
+    <button class="btn danger" onclick="fcRate(false)" style="margin-left:8px;">Need practice &rarr;</button>
+  </div>
+  <div class="fc-keys" id="fc-keys">Keyboard: <strong>Space</strong> = reveal &nbsp; <strong>&larr;</strong> = got it &nbsp; <strong>&rarr;</strong> = need practice</div>
+  <div id="fc-done" class="card hidden" style="text-align:center;">
+    <h3 style="color:var(--green);font-size:22px;">All cards reviewed!</h3>
+    <p id="fc-summary" style="margin:12px 0;"></p>
+    <button class="btn primary mt" onclick="fcRestart()">Review missed cards</button>
+    <button class="btn mt" onclick="fcRestartAll()" style="margin-left:8px;">Restart all</button>
+  </div>
+</div>
+
+<!-- ==================== TRUE/FALSE ==================== -->
+<div class="section" id="truefalse">
+  <h1>True or <span class="gradient">False</span></h1>
+  <p class="subtitle">Quick-fire concept check. These trap questions appear on EVERY exam. Get them wrong here, get them right on the exam.</p>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+    <div id="tf-progress-text" style="font-weight:600;">Question 1 of 20</div>
+    <div id="tf-score" class="score-badge mid">0/0</div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="tf-bar" style="width:0%"></div></div>
+
+  <div id="tf-card-wrap">
+    <div class="card" id="tf-card">
+      <div id="tf-statement" style="font-size:17px;font-weight:600;margin-bottom:24px;color:var(--text);line-height:1.6;"></div>
+      <div style="display:flex;gap:12px;">
+        <button class="btn" style="flex:1;font-size:16px;padding:14px;" onclick="tfAnswer(true)" id="tf-true-btn">TRUE</button>
+        <button class="btn" style="flex:1;font-size:16px;padding:14px;" onclick="tfAnswer(false)" id="tf-false-btn">FALSE</button>
+      </div>
+      <div id="tf-feedback" style="margin-top:16px;display:none;padding:16px;border-radius:var(--radius-sm);"></div>
+    </div>
+    <button class="btn primary mt" id="tf-next" style="display:none;" onclick="tfNext()">Next &rarr;</button>
+  </div>
+  <div id="tf-results" class="card results-overlay hidden">
+    <h3 id="tf-results-title" style="color:var(--green);"></h3>
+    <p id="tf-results-text"></p>
+    <button class="btn primary mt" onclick="tfRestart()">Restart (Shuffled)</button>
+  </div>
+</div>
+
+<!-- ==================== EXAM SIMULATOR ==================== -->
+<div class="section" id="exam-sim">
+  <h1>Exam <span class="gradient">Simulator</span></h1>
+  <p class="subtitle">A mini practice exam mirroring the real structure. Answer all questions, then check solutions. Time yourself: aim for 90 minutes total.</p>
+
+  <div class="exam-q">
+    <div class="q-num">Question 1 &mdash; Sampling (2 pts)</div>
+    <div class="q-text">A university wants to study students' sleep habits. They email a survey to all 8,000 students. Only 1,200 respond. Of these, 60% report sleeping less than 7 hours.</div>
+    <p><strong>a)</strong> What type of sampling is this?</p>
+    <select id="e1a"><option value="">Select...</option><option value="srs">Simple Random Sample</option><option value="convenience">Convenience / Voluntary</option><option value="stratified">Stratified</option><option value="cluster">Cluster</option><option value="systematic">Systematic</option></select>
+    <p class="mt"><strong>b)</strong> What type of bias is most likely present?</p>
+    <select id="e1b"><option value="">Select...</option><option value="sampling">Sampling / Undercoverage bias</option><option value="nonresponse">Nonresponse bias</option><option value="response">Response bias</option><option value="publication">Publication bias</option></select>
+    <p class="mt"><strong>c)</strong> They want to estimate the proportion with margin of error M=0.03 at 95% confidence. What sample size is needed? (Use &pi;=0.5 if unknown)</p>
+    <input type="text" id="e1c" placeholder="n = ?">
+    <div class="solution" id="sol1">
+      <h4>Solution</h4>
+      <p><strong>a)</strong> This is a <strong>voluntary response</strong> &mdash; they sent it to everyone but only those who chose to respond did. It's NOT an SRS because not everyone had an equal chance of being in the sample (self-selection).</p>
+      <p><strong>b)</strong> <strong>Nonresponse bias</strong> &mdash; only 1,200/8,000 (15%) responded. Those who respond likely differ from non-responders (e.g., students with sleep problems may be more motivated to respond).</p>
+      <p><strong>c)</strong> n = &pi;(1-&pi;)(z*/M)&sup2; = 0.5 &times; 0.5 &times; (1.96/0.03)&sup2; = 0.25 &times; 4268.44 = 1067.11 &rarr; <strong>n = 1068</strong> (always round UP)</p>
+    </div>
+  </div>
+
+  <div class="exam-q">
+    <div class="q-num">Question 2 &mdash; Test Selection (2 pts)</div>
+    <div class="q-text">For each scenario, select the appropriate statistical test:</div>
+    <p><strong>a)</strong> A teacher measures 25 students' anxiety levels before and after an exam.</p>
+    <select id="e2a"><option value="">Select test...</option><option value="z1">z-test for proportion</option><option value="z2">z-test for 2 proportions</option><option value="t1">One-sample t-test</option><option value="t2">Two-sample t-test (independent)</option><option value="tp">Paired t-test</option><option value="chi">Chi-squared test</option><option value="reg">Regression t-test</option><option value="f">F-test</option></select>
+
+    <p class="mt"><strong>b)</strong> A poll finds 45% of 500 men and 52% of 600 women support a policy. Is the difference significant?</p>
+    <select id="e2b"><option value="">Select test...</option><option value="z1">z-test for proportion</option><option value="z2">z-test for 2 proportions</option><option value="t1">One-sample t-test</option><option value="t2">Two-sample t-test (independent)</option><option value="tp">Paired t-test</option><option value="chi">Chi-squared test</option><option value="reg">Regression t-test</option><option value="f">F-test</option></select>
+
+    <p class="mt"><strong>c)</strong> Does adding "years of experience" to a salary model that already includes "education level" significantly improve prediction?</p>
+    <select id="e2c"><option value="">Select test...</option><option value="z1">z-test for proportion</option><option value="z2">z-test for 2 proportions</option><option value="t1">One-sample t-test</option><option value="t2">Two-sample t-test (independent)</option><option value="tp">Paired t-test</option><option value="chi">Chi-squared test</option><option value="reg">Regression t-test</option><option value="f">F-test</option></select>
+
+    <p class="mt"><strong>d)</strong> Is there an association between favorite OS (Windows/Mac/Linux) and study program (CS/AI/DS)?</p>
+    <select id="e2d"><option value="">Select test...</option><option value="z1">z-test for proportion</option><option value="z2">z-test for 2 proportions</option><option value="t1">One-sample t-test</option><option value="t2">Two-sample t-test (independent)</option><option value="tp">Paired t-test</option><option value="chi">Chi-squared test</option><option value="reg">Regression t-test</option><option value="f">F-test</option></select>
+
+    <div class="solution" id="sol2">
+      <h4>Solution</h4>
+      <p><strong>a) Paired t-test</strong> &mdash; SAME 25 students measured at two time points (before/after). Compute difference for each student, then one-sample t-test on differences.</p>
+      <p><strong>b) z-test for 2 proportions</strong> &mdash; Two independent groups (men/women), categorical response (support yes/no), comparing two proportions.</p>
+      <p><strong>c) F-test (nested models)</strong> &mdash; Comparing two nested regression models. The smaller model is nested within the larger one. Use F = ((SSE&#8321;-SSE&#8322;)/(k&#8322;-k&#8321;)) / (SSE&#8322;/(n-(k&#8322;+1))).</p>
+      <p><strong>d) Chi-squared test of independence</strong> &mdash; Two categorical variables (OS and program), 3&times;3 table. Test if they're independent.</p>
+    </div>
+  </div>
+
+  <div class="exam-q">
+    <div class="q-num">Question 3 &mdash; Regression (2.5 pts)</div>
+    <div class="q-text">A model predicts exam score from study hours and attendance (n=80):</div>
+    <div class="formula" style="display:block;margin:12px 0;">&#375; = 32.1 + 4.7&middot;(hours) + 0.85&middot;(attendance%)</div>
+    <p>R&sup2; = 0.68, s = 8.2, Total SS = 16400</p>
+    <p>For hours: b = 4.7, se = 1.2 &nbsp;|&nbsp; For attendance: b = 0.85, se = 0.31</p>
+
+    <p class="mt"><strong>a)</strong> Interpret the slope of "hours" in context:</p>
+    <textarea id="e3a" placeholder="For each..."></textarea>
+
+    <p class="mt"><strong>b)</strong> What is the Residual SS (SSE)?</p>
+    <input type="text" id="e3b" placeholder="SSE = ?">
+
+    <p class="mt"><strong>c)</strong> Test whether study hours is a significant predictor at &alpha; = 0.05. State the t-statistic, df, and conclusion.</p>
+    <textarea id="e3c" placeholder="t = ..., df = ..., conclusion: ..."></textarea>
+
+    <p class="mt"><strong>d)</strong> Calculate the F-statistic for the overall model and state the degrees of freedom.</p>
+    <textarea id="e3d" placeholder="F = ..., df1 = ..., df2 = ..."></textarea>
+
+    <div class="solution" id="sol3">
+      <h4>Solution</h4>
+      <p><strong>a)</strong> For each additional hour of study, <strong>holding attendance constant</strong>, the predicted exam score increases by 4.7 points.</p>
+      <p><strong>b)</strong> R&sup2; = 1 - SSE/Total SS &rarr; 0.68 = 1 - SSE/16400 &rarr; SSE = 16400 &times; (1 - 0.68) = <strong>5248</strong></p>
+      <p><strong>c)</strong> t = b/se = 4.7/1.2 = <strong>3.917</strong>, df = n-(k+1) = 80-3 = <strong>77</strong>. Since |t| = 3.917 is very large (p-value &ll; 0.05), we <strong>reject H&#8320;</strong>. There is sufficient evidence that study hours is a significant predictor of exam score, holding attendance constant.</p>
+      <p><strong>d)</strong> F = (R&sup2;/k) / ((1-R&sup2;)/(n-(k+1))) = (0.68/2) / (0.32/77) = 0.34 / 0.004156 = <strong>81.8</strong>, df&#8321; = <strong>2</strong>, df&#8322; = <strong>77</strong>. This is highly significant &mdash; the model explains significant variability.</p>
+    </div>
+  </div>
+
+  <div class="exam-q">
+    <div class="q-num">Question 4 &mdash; Hypothesis Test (2 pts)</div>
+    <div class="q-text">A company claims 40% of its users prefer dark mode. In a random sample of 200 users, 92 preferred dark mode. Test at &alpha; = 0.05 whether the true proportion is higher than 40%.</div>
+    <p><strong>Work through all 5 steps:</strong></p>
+    <textarea id="e4" style="min-height:200px;" placeholder="Step 1: Assumptions...&#10;Step 2: Hypotheses...&#10;Step 3: Test statistic...&#10;Step 4: P-value...&#10;Step 5: Conclusion..."></textarea>
+    <div class="solution" id="sol4">
+      <h4>Solution</h4>
+      <p><strong>Step 1 &mdash; Assumptions:</strong> Random sample &#10003;. n&pi;&#8320; = 200(0.40) = 80 &ge; 15 &#10003;. n(1-&pi;&#8320;) = 200(0.60) = 120 &ge; 15 &#10003;.</p>
+      <p><strong>Step 2 &mdash; Hypotheses:</strong> H&#8320;: &pi; = 0.40 vs H&#8336;: &pi; > 0.40 (one-sided, right-tailed)</p>
+      <p><strong>Step 3 &mdash; Test statistic:</strong> p&#770; = 92/200 = 0.46. z = (0.46 - 0.40) / &radic;(0.40&times;0.60/200) = 0.06 / &radic;(0.0012) = 0.06 / 0.03464 = <strong>1.732</strong></p>
+      <p><strong>Step 4 &mdash; P-value:</strong> P(Z > 1.732) &asymp; 0.0416 (from Table A)</p>
+      <p><strong>Step 5 &mdash; Conclusion:</strong> Since p-value (0.0416) < &alpha; (0.05), we <strong>reject H&#8320;</strong>. There is sufficient evidence at the 5% significance level that the proportion of users preferring dark mode is greater than 40%.</p>
+    </div>
+  </div>
+
+  <div class="exam-q">
+    <div class="q-num">Question 5 &mdash; Contingency Table (2 pts)</div>
+    <div class="q-text">Is there an association between exercise frequency and stress level?</div>
+    <table style="max-width:400px;">
+      <tr><th></th><th>Low stress</th><th>High stress</th><th>Total</th></tr>
+      <tr><td><strong>Exercise: Low</strong></td><td>30</td><td>50</td><td>80</td></tr>
+      <tr><td><strong>Exercise: High</strong></td><td>45</td><td>25</td><td>70</td></tr>
+      <tr><td><strong>Total</strong></td><td>75</td><td>75</td><td>150</td></tr>
+    </table>
+    <p class="mt"><strong>a)</strong> Calculate all expected counts:</p>
+    <textarea id="e5a" placeholder="f&#7497; = (row total &times; col total) / n&#10;..."></textarea>
+    <p class="mt"><strong>b)</strong> Calculate &chi;&sup2; and state the df:</p>
+    <input type="text" id="e5b" placeholder="&chi;&sup2; = ?, df = ?">
+    <p class="mt"><strong>c)</strong> At &alpha; = 0.05, what is your conclusion?</p>
+    <textarea id="e5c" placeholder="Since &chi;&sup2; = ... and df = ..., the p-value..."></textarea>
+    <div class="solution" id="sol5">
+      <h4>Solution</h4>
+      <p><strong>a) Expected counts:</strong></p>
+      <p>Low exercise, Low stress: f&#7497; = 80&times;75/150 = <strong>40</strong></p>
+      <p>Low exercise, High stress: f&#7497; = 80&times;75/150 = <strong>40</strong></p>
+      <p>High exercise, Low stress: f&#7497; = 70&times;75/150 = <strong>35</strong></p>
+      <p>High exercise, High stress: f&#7497; = 70&times;75/150 = <strong>35</strong></p>
+      <p>All f&#7497; &ge; 5 &#10003;</p>
+      <p><strong>b)</strong> &chi;&sup2; = (30-40)&sup2;/40 + (50-40)&sup2;/40 + (45-35)&sup2;/35 + (25-35)&sup2;/35 = 2.5 + 2.5 + 2.857 + 2.857 = <strong>10.714</strong></p>
+      <p>df = (2-1)(2-1) = <strong>1</strong></p>
+      <p><strong>c)</strong> With df=1, &chi;&sup2; = 10.714 far exceeds the critical value of 3.841 (&alpha;=0.05). P-value &ll; 0.05. <strong>Reject H&#8320;.</strong> There is sufficient evidence of an association between exercise frequency and stress level.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:36px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <button class="btn primary" onclick="showExamSolutions()" style="font-size:16px;padding:14px 40px;">Show All Solutions</button>
+    <button class="btn" onclick="resetExam()" style="font-size:14px;padding:12px 30px;">Reset Exam</button>
+  </div>
+</div>
+
+</div><!-- end container -->
+</main>
+</div><!-- end app -->
+
+<script>
+// ==================== UTILITIES ====================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ==================== LOCAL STORAGE ====================
+const SAVE_KEY = 'stats2526_progress';
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try {
+    const current = loadProgress();
+    localStorage.setItem(SAVE_KEY, JSON.stringify({...current, ...data}));
+  } catch(e) {}
+}
+const saved = loadProgress();
+
+// ==================== MOBILE SIDEBAR ====================
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('mobile-overlay').classList.toggle('open');
+}
+
+// ==================== NAVIGATION ====================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#nav button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`#nav button[data-section="${id}"]`).classList.add('active');
+  // Close mobile sidebar
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('mobile-overlay').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+// ==================== STORY MODE ====================
+const chapters = [
+  {
+    title: "1. Collecting Data",
+    content: `
+<div class="story-block">
+<div class="label">The Foundation of Everything</div>
+<p>Every statistical conclusion you will ever draw depends entirely on how the data was collected. Bad data in, garbage conclusions out. This chapter is about getting the data right.</p>
+<p>Before we collect anything, we need to understand what we are measuring. Every variable falls into one of two categories:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Categorical variables</strong> place individuals into groups or categories. Examples: gender (male/female/non-binary), programming language preference (Python/Java/C++), pass/fail.</li>
+<li><strong>Quantitative variables</strong> are numbers you can do arithmetic with. Examples: height (cm), exam score, number of bugs in code, reaction time (ms).</li>
+</ul>
+<p>This distinction matters enormously because it determines which statistical method you use. Categorical response variable &rarr; z-test for proportions or chi-squared. Quantitative response variable &rarr; t-test or regression. Get this wrong on the exam and you pick the wrong test in Q2.</p>
+</div>
+
+<h3>The Four Measurement Scales</h3>
+<div class="story-block">
+<div class="label">NOIR &mdash; Nominal, Ordinal, Interval, Ratio</div>
+<p>Within those two types, there are four levels of measurement, each building on the previous:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Nominal</strong> &mdash; Labels with no inherent order. Examples: blood type (A, B, AB, O), nationality, eye color. You can only check equality (same or different).</li>
+<li><strong>Ordinal</strong> &mdash; Categories with a meaningful order, but the gaps between categories are not necessarily equal. Examples: satisfaction rating (1-5 stars), education level (high school, bachelor's, master's, PhD), pain level (mild/moderate/severe). You can say "more than" but not "how much more."</li>
+<li><strong>Interval</strong> &mdash; Ordered with equal gaps, but no true zero point. The classic example: temperature in Celsius. The difference between 20C and 30C is the same as between 30C and 40C, but 0C does not mean "no temperature." You cannot say "40C is twice as hot as 20C."</li>
+<li><strong>Ratio</strong> &mdash; Equal gaps plus a true zero. Examples: weight (0 kg = no weight), income, height, age, number of errors. You CAN say "60 kg is twice 30 kg."</li>
+</ul>
+</div>
+
+<div class="story-block insight">
+<div class="label">Why This Matters for Test Selection</div>
+<p>Nominal and ordinal are <strong>categorical</strong>. Interval and ratio are <strong>quantitative</strong>. On the exam, you need to identify the variable type to choose the correct test. A common trick: "satisfaction rated 1-5" looks like numbers, but it is <strong>ordinal</strong> (categorical), not truly quantitative. The numbers are just labels for ordered categories.</p>
+</div>
+
+<h3>The Five Sampling Methods</h3>
+<div class="story-block">
+<div class="label">Probability Sampling &mdash; The Gold Standard</div>
+<p>A <strong>probability sample</strong> is one where every member of the population has a known, nonzero chance of being selected. Only probability samples allow valid statistical inference. Here are the five methods:</p>
+
+<p><strong>1. Simple Random Sample (SRS)</strong></p>
+<p>Every individual has an equal chance of being selected, and every possible sample of size n is equally likely. Think: put all 8,000 student names in a hat, draw 200. This is the theoretical ideal, but often impractical for large populations.</p>
+
+<p><strong>2. Systematic Sampling</strong></p>
+<p>Pick a random starting point, then select every k-th individual from a list. Example: you want 100 students from 5,000. Calculate k = 5000/100 = 50. Pick a random number between 1 and 50 (say 23), then select person 23, 73, 123, 173, ... This works beautifully unless the list has a hidden pattern with period k (e.g., every 50th entry is a TA, not a student).</p>
+
+<p><strong>3. Stratified Sampling</strong></p>
+<p>Divide the population into non-overlapping groups (called <strong>strata</strong>) that share a characteristic, then take an SRS from each stratum. Example: you want to study exam performance. Stratify by year (1st, 2nd, 3rd year), then randomly sample 50 students from each year. This <strong>guarantees representation</strong> from every subgroup and is more precise than SRS when the strata differ from each other.</p>
+
+<p><strong>4. Cluster Sampling</strong></p>
+<p>Divide the population into natural clusters (groups), randomly select some clusters, then survey <strong>everyone</strong> in the selected clusters. Example: randomly pick 5 of the 40 tutorial groups, then survey all students in those 5 groups. This is cheaper (you only visit 5 rooms) but less precise because students within a cluster tend to be similar.</p>
+
+<p><strong>5. Multistage Sampling</strong></p>
+<p>Like cluster sampling, but instead of surveying everyone in the selected clusters, you take an SRS within each selected cluster. Example: randomly pick 10 of 40 tutorial groups (stage 1), then randomly pick 15 students from each selected group (stage 2). This is the most practical method for large, geographically spread populations.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Exam-Style: Identify the Sampling Method</div>
+<p><strong>Scenario:</strong> A university has 6 faculties. Researchers randomly select 2 faculties, then randomly select 100 students from each.</p>
+<p><strong>Answer:</strong> This is <strong>multistage sampling</strong>. Stage 1 = randomly selecting clusters (faculties). Stage 2 = SRS within selected clusters. It is NOT stratified because they did not sample from ALL faculties &mdash; they skipped 4 entirely.</p>
+<p><strong>Key distinction:</strong> Stratified = sample from EVERY group. Cluster/Multistage = sample from SOME groups.</p>
+</div>
+
+<div class="story-block trap">
+<div class="label">Non-Probability Sampling &mdash; The Traps</div>
+<p><strong>Convenience sampling</strong> (surveying whoever is nearby &mdash; students in the cafeteria) and <strong>voluntary response sampling</strong> (posting a survey online and seeing who replies) are NOT probability sampling methods. They introduce systematic bias because certain types of people are over- or under-represented. You CANNOT generalize from these to the population.</p>
+</div>
+
+<h3>Observational Studies vs Experiments</h3>
+<div class="story-block">
+<div class="label">Can You Prove Causation?</div>
+<p>In an <strong>observational study</strong>, you observe and measure but do not interfere. Example: comparing exam scores of students who chose to attend tutorials vs those who did not. The problem: students who attend might be more motivated in general, so any difference could be due to motivation, not tutorials. This unmeasured variable (motivation) is called a <strong>lurking variable</strong>, and if it is related to both the explanatory and response variable, it is a <strong>confounding variable</strong>.</p>
+<p>In an <strong>experiment</strong>, the researcher <strong>randomly assigns</strong> subjects to treatment groups. Example: randomly assign 200 students &mdash; 100 must attend tutorials, 100 must not. Random assignment tends to balance out all lurking variables (motivation, prior knowledge, etc.) across groups, so any difference in outcomes can be attributed to the treatment.</p>
+<p><strong>Bottom line:</strong> Only properly randomized experiments can establish <strong>causation</strong>. Observational studies can show association, but correlation does not imply causation (because of potential confounders).</p>
+</div>
+
+<h3>The Three Types of Bias</h3>
+<div class="story-block">
+<div class="label">Know These Cold for Q1</div>
+<p><strong>1. Sampling bias (Undercoverage bias)</strong></p>
+<p>Your sampling frame systematically excludes part of the population. Example: conducting a phone survey using landlines only &mdash; this excludes younger people who only have mobile phones. The sample does not represent the population because some groups had zero chance of being selected.</p>
+
+<p><strong>2. Nonresponse bias</strong></p>
+<p>You selected people correctly, but some do not respond, and the non-responders are systematically different from responders. Example: a health survey has 30% response rate. Those who are very ill may not have the energy to respond, so the sample over-represents healthy people. The key: it is not the low response rate itself that is the problem &mdash; it is that non-responders differ from responders in ways related to what you are measuring.</p>
+
+<p><strong>3. Response bias</strong></p>
+<p>People respond, but their answers are systematically inaccurate. Causes include:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Leading questions</strong>: "Don't you agree that..." pushes people toward yes.</li>
+<li><strong>Social desirability</strong>: People underreport drinking, drug use; overreport exercise, studying.</li>
+<li><strong>Recall bias</strong>: People misremember past events.</li>
+<li><strong>Wording effects</strong>: Different phrasings of the same question get different answers.</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Exam-Style: Identify the Bias</div>
+<p><strong>Scenario:</strong> A university emails all 8,000 students a survey about sleep habits. Only 1,200 respond. Of those, 60% report sleeping less than 7 hours.</p>
+<p><strong>Answer:</strong> <strong>Nonresponse bias</strong>. All students were contacted (no undercoverage), but only 15% responded. Students who are sleep-deprived and frustrated may be more motivated to respond, making the 60% figure an overestimate.</p>
+<p>Note: you could also argue response bias (social desirability or recall), but the most obvious issue here is the 85% nonresponse rate.</p>
+</div>
+
+<h3>Simpson's Paradox &mdash; A Preview</h3>
+<div class="story-block warning">
+<div class="label">Why Observational Data Deceives</div>
+<p><strong>Simpson's paradox</strong> occurs when a trend that appears in several groups reverses when the groups are combined. This is a direct consequence of lurking variables in observational data.</p>
+<p><strong>Classic example:</strong> Hospital A has a higher overall death rate than Hospital B. But when you look at severe cases only, Hospital A has a LOWER death rate. And for mild cases, Hospital A also has a LOWER death rate. How? Hospital A treats far more severe cases. The severity mix (lurking variable) confounds the comparison.</p>
+<p>We will see this again in Chapter 9 (Multiple Regression), where controlling for confounders mathematically resolves the paradox.</p>
+</div>
+`
+  },
+  {
+    title: "2. Describing Data",
+    content: `
+<div class="story-block">
+<div class="label">From Raw Numbers to Understanding</div>
+<p>You have collected your data. Now what? Before doing any inference, you need to <strong>describe</strong> what you see. Descriptive statistics summarize three things about a distribution: its <strong>center</strong> (where is it?), its <strong>spread</strong> (how variable is it?), and its <strong>shape</strong> (is it symmetric or skewed?).</p>
+</div>
+
+<h3>Measures of Center</h3>
+<div class="story-block">
+<div class="label">Mean, Median, Mode &mdash; When to Use Each</div>
+<p><strong>Mean (x&#772;)</strong>: The arithmetic average. Add all values, divide by n.</p>
+<div class="formula">x&#772; = (1/n) &middot; &Sigma; x&#7522;</div>
+<p>The mean is the "balance point" of the distribution. Its key weakness: it is <strong>sensitive to outliers</strong>. One billionaire in a room of 20 people will massively inflate the mean income. Use the mean when data is roughly symmetric with no extreme outliers.</p>
+
+<p><strong>Median</strong>: The middle value when data is sorted. If n is even, it is the average of the two middle values. The median is <strong>resistant to outliers</strong> &mdash; that billionaire barely moves it. Use the median for skewed data or data with outliers (income, house prices, survival times).</p>
+
+<p><strong>Mode</strong>: The most frequently occurring value. Mainly useful for categorical data (the modal response). For quantitative data, it is rarely used except to describe the number of peaks (unimodal, bimodal, multimodal).</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Effect of Outliers</div>
+<p>Dataset: 2, 3, 4, 4, 5, 6, 7, 8, 9, 100</p>
+<p>Mean = (2+3+4+4+5+6+7+8+9+100)/10 = 148/10 = <strong>14.8</strong></p>
+<p>Median = average of 5th and 6th values = (5+6)/2 = <strong>5.5</strong></p>
+<p>The mean (14.8) is pulled far to the right by the outlier 100. The median (5.5) barely notices it. This is why we say the median is <strong>resistant</strong> to outliers.</p>
+</div>
+
+<h3>Shape: Symmetric vs Skewed</h3>
+<div class="story-block">
+<div class="label">How Shape Affects Center</div>
+<p><strong>Symmetric distribution</strong>: The left and right sides are mirror images. Mean &asymp; Median. Example: heights of adult men.</p>
+<p><strong>Right-skewed (positively skewed)</strong>: Long tail to the right. Mean > Median. The mean gets pulled toward the tail. Example: income, house prices.</p>
+<p><strong>Left-skewed (negatively skewed)</strong>: Long tail to the left. Mean < Median. Example: age at retirement, exam scores on an easy test.</p>
+<p>The relationship between mean and median tells you the skewness direction. This is a common exam question.</p>
+</div>
+
+<div class="story-block trap">
+<div class="label">Skewness Memory Trick</div>
+<p>The mean chases the tail. Right tail &rarr; mean goes right &rarr; mean > median. Left tail &rarr; mean goes left &rarr; mean < median. Think of the mean as being "pulled" by outliers in the direction of the skew.</p>
+</div>
+
+<h3>Measures of Spread</h3>
+<div class="story-block">
+<div class="label">Range, IQR, Variance, Standard Deviation</div>
+<p><strong>Range</strong> = max - min. The simplest measure, but it depends on only two values and is extremely sensitive to outliers. Rarely used in practice.</p>
+
+<p><strong>Interquartile Range (IQR)</strong> = Q3 - Q1. The range of the middle 50% of the data. Resistant to outliers because it ignores the extremes.</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Q1 (25th percentile): median of the lower half</li>
+<li>Q2 (50th percentile): the overall median</li>
+<li>Q3 (75th percentile): median of the upper half</li>
+</ul>
+
+<p><strong>Variance (s&sup2;)</strong>: The average squared distance from the mean.</p>
+<div class="formula">s&sup2; = &Sigma;(x&#7522; - x&#772;)&sup2; / (n - 1)</div>
+<p>We divide by n-1 (not n) because we estimated the mean from the sample &mdash; this <strong>degrees of freedom correction</strong> makes s&sup2; an unbiased estimator of the population variance &sigma;&sup2;.</p>
+
+<p><strong>Standard deviation (s)</strong>: The square root of the variance.</p>
+<div class="formula">s = &radic;(s&sup2;) = &radic;(&Sigma;(x&#7522; - x&#772;)&sup2; / (n - 1))</div>
+<p>The standard deviation is in the same units as the original data, so it is more interpretable than the variance. It tells you roughly how far a typical observation is from the mean.</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">Why Standard Deviation Matters So Much</div>
+<p>Almost everything in the rest of this course is built on the standard deviation. Standard errors are standard deviations of sampling distributions. Test statistics measure "how many standard deviations away." Confidence intervals are "estimate plus or minus a few standard deviations." If you deeply understand what s measures, the rest of statistics clicks into place.</p>
+</div>
+
+<h3>Outlier Detection</h3>
+<div class="story-block">
+<div class="label">The 1.5 &times; IQR Rule</div>
+<p>A value is a suspected <strong>outlier</strong> if it falls:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Below <strong>Q1 - 1.5 &times; IQR</strong> (lower fence)</li>
+<li>Above <strong>Q3 + 1.5 &times; IQR</strong> (upper fence)</li>
+</ul>
+<p>These fences define the "whiskers" of a boxplot. Any observation beyond the fences is plotted as an individual point.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Outlier Detection</div>
+<p>Data (sorted): 12, 15, 17, 19, 21, 23, 25, 28, 31, 72</p>
+<p>Q1 = 17, Q3 = 28, IQR = 28 - 17 = 11</p>
+<p>Lower fence = 17 - 1.5(11) = 17 - 16.5 = <strong>0.5</strong></p>
+<p>Upper fence = 28 + 1.5(11) = 28 + 16.5 = <strong>44.5</strong></p>
+<p>72 > 44.5, so <strong>72 is an outlier</strong>. All other values are within [0.5, 44.5].</p>
+</div>
+
+<h3>The Five-Number Summary and Boxplots</h3>
+<div class="story-block">
+<div class="label">A Complete Picture in 5 Numbers</div>
+<p>The <strong>five-number summary</strong> consists of: Minimum, Q1, Median, Q3, Maximum.</p>
+<p>A <strong>boxplot</strong> visualizes this: the box spans Q1 to Q3, the line inside is the median, and the whiskers extend to the most extreme non-outlier values. Outliers appear as individual dots.</p>
+<p>Boxplots are perfect for comparing distributions across groups side by side. You can immediately see differences in center, spread, and skewness.</p>
+</div>
+
+<h3>Effect of Transformations on Center and Spread</h3>
+<div class="story-block">
+<div class="label">Adding and Multiplying &mdash; Know the Rules</div>
+<p>If you transform every value by <strong>Y = aX + b</strong> (multiply by a, then add b):</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Center</strong>: new mean = a &times; old mean + b. New median = a &times; old median + b. Both center measures are affected by both a and b.</li>
+<li><strong>Spread</strong>: new s = |a| &times; old s. New IQR = |a| &times; old IQR. Adding b does NOT change the spread &mdash; it shifts all values equally. Only the multiplier |a| affects spread.</li>
+<li><strong>Variance</strong>: new s&sup2; = a&sup2; &times; old s&sup2;. (Variance uses the square of the multiplier.)</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Unit Conversion</div>
+<p>Temperatures in Celsius have mean = 20, s = 5. Convert to Fahrenheit: F = 1.8C + 32.</p>
+<p>New mean = 1.8(20) + 32 = <strong>68 F</strong></p>
+<p>New s = 1.8(5) = <strong>9 F</strong> (the +32 does not affect spread)</p>
+<p>New variance = (1.8)&sup2;(25) = 3.24 &times; 25 = <strong>81 F&sup2;</strong></p>
+</div>
+
+<div class="story-block trap">
+<div class="label">Common Exam Trap: Variance vs Standard Deviation</div>
+<p>If you multiply data by a constant a: standard deviation gets multiplied by |a|, but variance gets multiplied by a&sup2;. Students frequently mix these up. Remember: variance is the SQUARE of standard deviation, so the multiplier also gets squared.</p>
+</div>
+`
+  },
+  {
+    title: "3. Relationships Between Variables",
+    content: `
+<div class="story-block">
+<div class="label">From One Variable to Two</div>
+<p>So far we have described single variables. Now the real statistics begins: we have two variables and want to know if they are <strong>related</strong>. The method depends entirely on the types of variables involved.</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Both categorical &rarr; <strong>contingency table</strong> (this chapter) and <strong>chi-squared test</strong> (Chapter 8)</li>
+<li>Both quantitative &rarr; <strong>scatter plot, correlation, regression</strong> (this chapter and Chapter 4)</li>
+<li>One categorical (explanatory) + one quantitative (response) &rarr; <strong>compare groups</strong> (Chapter 7)</li>
+</ul>
+</div>
+
+<h3>Two Categorical Variables: Contingency Tables</h3>
+<div class="story-block">
+<div class="label">Joint, Marginal, and Conditional Proportions</div>
+<p>A <strong>contingency table</strong> (also called a two-way table or cross-tabulation) displays counts for combinations of two categorical variables.</p>
+<p>There are three types of proportions you can compute, and the exam will ask you to distinguish them:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Joint proportion</strong>: cell count / grand total. "What fraction of ALL observations fall in this cell?"</li>
+<li><strong>Marginal proportion</strong>: row total / grand total (or column total / grand total). "What fraction are in this row/column overall?"</li>
+<li><strong>Conditional proportion</strong>: cell count / row total (or cell count / column total). "Given that someone is in this row, what fraction are in this column?" This is the one that matters most for detecting associations.</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Full Contingency Table Analysis</div>
+<p>200 CS students were surveyed about their preferred OS and year of study:</p>
+<table>
+<tr><th></th><th>Windows</th><th>macOS</th><th>Linux</th><th>Total</th></tr>
+<tr><td><strong>Year 1</strong></td><td>40</td><td>30</td><td>10</td><td>80</td></tr>
+<tr><td><strong>Year 2</strong></td><td>25</td><td>25</td><td>20</td><td>70</td></tr>
+<tr><td><strong>Year 3</strong></td><td>10</td><td>15</td><td>25</td><td>50</td></tr>
+<tr><td><strong>Total</strong></td><td>75</td><td>70</td><td>55</td><td>200</td></tr>
+</table>
+<p><strong>Joint proportion</strong> of Year 1 Linux users: 10/200 = 0.05 (5% of all students)</p>
+<p><strong>Marginal proportion</strong> of Year 1: 80/200 = 0.40 (40% of students are Year 1)</p>
+<p><strong>Conditional proportion</strong> of Linux given Year 1: 10/80 = 0.125 (12.5%)</p>
+<p><strong>Conditional proportion</strong> of Linux given Year 3: 25/50 = 0.50 (50%)</p>
+<p>The conditional proportions differ sharply (12.5% vs 50%), suggesting OS preference and year are <strong>associated</strong>. If they were independent, these conditional proportions would be roughly equal.</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">Independence Check</div>
+<p>Two categorical variables are <strong>independent</strong> if the conditional proportions are the same across all rows (or equivalently, all columns). If the conditional distribution of Y is the same regardless of which group of X you look at, then X tells you nothing about Y &mdash; they are independent.</p>
+</div>
+
+<h3>Two Quantitative Variables: Scatter Plots</h3>
+<div class="story-block">
+<div class="label">Direction, Form, Strength</div>
+<p>When both variables are quantitative, start with a <strong>scatter plot</strong>. Describe three things:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Direction</strong>: Positive (up and to the right), negative (down and to the right), or none</li>
+<li><strong>Form</strong>: Linear, curved, clusters, or no pattern</li>
+<li><strong>Strength</strong>: How tightly do points follow the form? Tight = strong, scattered = weak</li>
+</ul>
+<p>Also note any <strong>outliers</strong> &mdash; points that deviate from the overall pattern.</p>
+</div>
+
+<h3>The Correlation Coefficient r</h3>
+<div class="story-block">
+<div class="label">The Number That Measures Linear Association</div>
+<p>The <strong>Pearson correlation coefficient r</strong> quantifies the strength and direction of the <strong>linear</strong> relationship between two quantitative variables.</p>
+<p>Conceptually, r standardizes both X and Y (converting to z-scores), then averages the products of paired z-scores:</p>
+<div class="formula">r = (1/(n-1)) &middot; &Sigma; ((x&#7522; - x&#772;)/s&#8339;) &middot; ((y&#7522; - y&#772;)/s&#7527;)</div>
+<p>You will never compute this by hand on the exam &mdash; but understanding the formula helps you understand the properties.</p>
+</div>
+
+<div class="story-block">
+<div class="label">ALL Properties of r &mdash; Memorize These</div>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Range</strong>: Always between -1 and +1. r = +1 means perfect positive linear, r = -1 means perfect negative linear, r = 0 means no linear relationship.</li>
+<li><strong>Unit-free</strong>: Changing units (cm to inches, dollars to euros) does NOT change r. This is because r uses z-scores, which strip away units.</li>
+<li><strong>Symmetric</strong>: r(X, Y) = r(Y, X). It does not matter which variable you call X or Y.</li>
+<li><strong>Linear only</strong>: r measures only linear association. A perfect parabola (clearly related!) can have r = 0. Always plot the data first.</li>
+<li><strong>Outlier sensitive</strong>: A single outlier can dramatically increase or decrease r. One extreme point can create the illusion of a strong correlation or mask a real one.</li>
+<li><strong>r is NOT the slope</strong>: r is a <strong>standardized</strong> measure. The slope b has units (change in Y per unit X). They are related: r = b &middot; (s&#8339; / s&#7527;).</li>
+<li><strong>Adding a constant</strong> to X or Y does not change r.</li>
+<li><strong>Multiplying</strong> X or Y by a positive constant does not change r. Multiplying by a negative constant flips the sign.</li>
+</ul>
+</div>
+
+<div class="story-block trap">
+<div class="label">THE Classic Exam Trap: r vs r&sup2;</div>
+<p><strong>r = 0.7 does NOT mean 70% of the variability is explained.</strong></p>
+<p>r&sup2; = 0.49, so only <strong>49%</strong> of the variability in Y is explained by the linear relationship with X.</p>
+<p>r = 0.7 sounds impressive but it means more than half the variability is UNEXPLAINED. This distinction between r and r&sup2; appears on virtually every exam. Always square r to get the proportion of explained variability.</p>
+<p>To explain 90% of the variability, you need r = &radic;0.90 = 0.95. To explain 50%, you need r = 0.71. The relationship is nonlinear and students consistently overestimate how "good" a given r is.</p>
+</div>
+
+<h3>Correlation and Causation</h3>
+<div class="story-block warning">
+<div class="label">The Most Important Rule in Statistics</div>
+<p><strong>Correlation does NOT imply causation</strong> &mdash; except in randomized experiments.</p>
+<p>If X and Y are correlated in observational data, there are several possible explanations:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>X causes Y</li>
+<li>Y causes X (reverse causation)</li>
+<li>A lurking variable Z causes both X and Y (confounding)</li>
+<li>The correlation is coincidental</li>
+</ul>
+<p>Only in a <strong>randomized experiment</strong> (where subjects are randomly assigned to values of X) can you rule out confounders and establish that X causes Y. In observational data, always say "associated with" rather than "causes."</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">The Bridge to Regression</div>
+<p>Correlation tells you <strong>whether</strong> there is a linear relationship and how strong it is. But it does not tell you the equation of that relationship. That is what regression does. The connection: r = b &middot; (s&#8339;/s&#7527;), so correlation is the slope expressed in standardized units. Chapters 4 and 9 build the full regression story.</p>
+</div>
+`
+  },
+  {
+    title: "4. Regression &mdash; The Core",
+    content: `
+<div class="story-block">
+<div class="label">The Most Important Topic on the Exam</div>
+<p>Regression is Q3 &mdash; the highest-value question at 2-2.5 points. It appears on every single past exam. Every sub-topic here has been tested. Master this chapter and you secure a large chunk of your grade.</p>
+<p>In Chapter 3 we learned that correlation measures the strength of a linear relationship. Now we go further: we find the <strong>equation of the line</strong> that best describes the relationship, and we use it to make predictions.</p>
+</div>
+
+<h3>The Simple Linear Regression Model</h3>
+<div class="story-block">
+<div class="label">Population vs Sample &mdash; Two Levels</div>
+<p>There are two versions of the model, and you must keep them straight:</p>
+<p><strong>Population model</strong> (the truth we are trying to estimate):</p>
+<div class="formula">&mu;&#7527; = &alpha; + &beta;x</div>
+<p>This says: for a given value of x, the <strong>mean</strong> of Y in the population is &alpha; + &beta;x. Individual observations scatter around this mean with standard deviation &sigma;.</p>
+<p><strong>Sample regression line</strong> (our estimate from data):</p>
+<div class="formula">y&#770; = a + bx</div>
+<p>Here a estimates &alpha; (the intercept) and b estimates &beta; (the slope). The "hat" on y&#770; reminds us this is a <strong>predicted</strong> value, not an observed one.</p>
+</div>
+
+<h3>Least Squares: Finding the Best Line</h3>
+<div class="story-block">
+<div class="label">What It Minimizes</div>
+<p>Among all possible lines, the least squares line is the one that minimizes the <strong>sum of squared residuals</strong>:</p>
+<div class="formula">Minimize &Sigma;(y&#7522; - y&#770;&#7522;)&sup2; = &Sigma;(y&#7522; - a - bx&#7522;)&sup2;</div>
+<p>Why squared? Because positive and negative residuals would cancel out if we just summed them. Squaring makes all deviations positive and penalizes large errors more than small ones.</p>
+<p>The formulas that result from this minimization:</p>
+<div class="formula">b = &Sigma;(x&#7522; - x&#772;)(y&#7522; - y&#772;) / &Sigma;(x&#7522; - x&#772;)&sup2; = SS&#8339;&#7527; / SS&#8339;&#8339;</div>
+<div class="formula">a = y&#772; - b &middot; x&#772;</div>
+<p>Notice that the line always passes through the point (x&#772;, y&#772;) &mdash; the centroid of the data.</p>
+</div>
+
+<h3>Interpretation of Slope and Intercept</h3>
+<div class="story-block insight">
+<div class="label">The Exam ALWAYS Asks This</div>
+<p><strong>Slope b</strong>: "For each 1-unit increase in [X], the predicted [Y] changes by b [units of Y]."</p>
+<p>Example: If b = 4.7 in a model predicting exam score from study hours: "For each additional hour of study, the predicted exam score increases by 4.7 points."</p>
+<p><strong>Intercept a</strong>: "When [X] = 0, the predicted [Y] is a [units of Y]."</p>
+<p>Example: If a = 35: "A student who studies 0 hours is predicted to score 35 points."</p>
+<p>The intercept often has no meaningful interpretation (what does 0 hours of study even mean in practice?). If x = 0 is outside the range of your data, say so &mdash; the intercept is just a mathematical anchor for the line, not a meaningful prediction.</p>
+</div>
+
+<h3>Residuals</h3>
+<div class="story-block">
+<div class="label">The Diagnostic Tool</div>
+<p>A <strong>residual</strong> is the difference between what you observed and what the model predicted:</p>
+<div class="formula">e&#7522; = y&#7522; - y&#770;&#7522;</div>
+<p>Positive residual = observed above the line. Negative = below the line.</p>
+<p><strong>Key properties of residuals:</strong></p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>They <strong>sum to zero</strong>: &Sigma;e&#7522; = 0 (a mathematical consequence of least squares)</li>
+<li>They are <strong>uncorrelated with x</strong>: &Sigma;x&#7522;e&#7522; = 0</li>
+<li>They are <strong>uncorrelated with y&#770;</strong>: &Sigma;y&#770;&#7522;e&#7522; = 0</li>
+<li>Their mean is zero: e&#772; = 0</li>
+</ul>
+<p>We use residual plots (residuals vs x, or residuals vs y&#770;) to check the conditions for regression. Patterns in the residual plot (curves, funnels, clusters) indicate violated assumptions.</p>
+</div>
+
+<h3>The Sums of Squares Decomposition</h3>
+<div class="story-block">
+<div class="label">This Unlocks Everything &mdash; Study It Carefully</div>
+<p>The total variability in Y can be decomposed into two parts:</p>
+<div class="formula">Total SS = Regression SS + Residual SS (SSE)</div>
+<p>In words: Total variability = Explained variability + Unexplained variability</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Total SS</strong> = &Sigma;(y&#7522; - y&#772;)&sup2; &mdash; how much Y varies around its mean (ignoring X entirely)</li>
+<li><strong>Regression SS</strong> = &Sigma;(y&#770;&#7522; - y&#772;)&sup2; &mdash; how much the predictions vary around the mean (the part explained by X)</li>
+<li><strong>Residual SS (SSE)</strong> = &Sigma;(y&#7522; - y&#770;&#7522;)&sup2; &mdash; how much Y varies around the regression line (the leftover error)</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Sums of Squares</div>
+<p>A simple dataset with 5 observations. We are told: Total SS = 400, SSE = 120.</p>
+<p>Regression SS = Total SS - SSE = 400 - 120 = <strong>280</strong></p>
+<p>r&sup2; = Regression SS / Total SS = 280/400 = <strong>0.70</strong></p>
+<p>Equivalently: r&sup2; = 1 - SSE/Total SS = 1 - 120/400 = 1 - 0.30 = <strong>0.70</strong></p>
+<p>Interpretation: "70% of the variability in Y is explained by the linear relationship with X."</p>
+<p>r = &radic;0.70 = 0.837 (positive because the slope is positive)</p>
+</div>
+
+<h3>r&sup2; &mdash; The Coefficient of Determination</h3>
+<div class="story-block">
+<div class="label">How Good Is the Model?</div>
+<div class="formula">r&sup2; = Regression SS / Total SS = 1 - SSE / Total SS</div>
+<p>r&sup2; is the <strong>proportion of variability in Y explained by the linear relationship with X</strong>. It ranges from 0 (model explains nothing) to 1 (model explains everything &mdash; all points on the line).</p>
+<p>Always interpret r&sup2; in context: "X explains [r&sup2; &times; 100]% of the variability in Y."</p>
+</div>
+
+<h3>Residual Standard Deviation</h3>
+<div class="story-block">
+<div class="label">How Big Are Typical Errors?</div>
+<div class="formula">s = &radic;(SSE / (n - 2))</div>
+<p>This is the standard deviation of the residuals (approximately). It tells you: "On average, predictions from this model are off by about s units."</p>
+<p>The denominator is n - 2 because we estimated two parameters (a and b), using up 2 degrees of freedom. This s is used in all inference about the regression (confidence intervals, hypothesis tests).</p>
+</div>
+
+<h3>Standard Error of the Slope</h3>
+<div class="story-block">
+<div class="label">How Precise Is b?</div>
+<div class="formula">se(b) = s / &radic;(SS&#8339;&#8339;)</div>
+<p>where SS&#8339;&#8339; = &Sigma;(x&#7522; - x&#772;)&sup2; is the total variability in X.</p>
+<p>This tells you how much b would vary from sample to sample. A smaller se(b) means a more precise estimate of the true slope &beta;. The se(b) gets smaller when:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>s is small (less noise in the data)</li>
+<li>SS&#8339;&#8339; is large (more spread in X values gives you a more stable slope estimate)</li>
+<li>n is large (more data means more precision, since SS&#8339;&#8339; grows with n)</li>
+</ul>
+</div>
+
+<h3>Conditions for Regression Inference</h3>
+<div class="story-block warning">
+<div class="label">Check These Before Any Test or CI</div>
+<p>The four conditions (often called LINE):</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>L &mdash; Linearity</strong>: The relationship between X and Y is linear. Check: scatter plot and residual plot show no curves.</li>
+<li><strong>I &mdash; Independence</strong>: Observations are independent of each other. Check: knowing one residual tells you nothing about another. Violated in time series data.</li>
+<li><strong>N &mdash; Normality</strong>: At each value of X, the Y values are Normally distributed around the line. Check: histogram or Normal Q-Q plot of residuals looks roughly Normal. Less important for large n due to CLT.</li>
+<li><strong>E &mdash; Equal spread (homoscedasticity)</strong>: The scatter around the line is the same for all values of X. Check: residual plot shows constant vertical spread (no funnel shape).</li>
+</ul>
+</div>
+
+<h3>Extrapolation</h3>
+<div class="story-block trap">
+<div class="label">The Extrapolation Danger</div>
+<p><strong>Extrapolation</strong> means using the regression line to predict Y for X values outside the range of your data. This is dangerous because you have no evidence the linear pattern continues beyond what you observed.</p>
+<p>Example: You model the relationship between study hours (1-8) and exam score. Predicting the score for 5 hours? Fine &mdash; that is interpolation. Predicting for 20 hours? That is extrapolation &mdash; the relationship might plateau, or the model might predict a score above 100, which is impossible.</p>
+<p>The exam loves to ask: "Is this prediction reliable?" If the x-value is outside the observed range, answer NO and explain why.</p>
+</div>
+
+<h3>Influential Observations vs Outliers</h3>
+<div class="story-block">
+<div class="label">Not All Unusual Points Are Equal</div>
+<p>An <strong>outlier</strong> in regression is a point with a large residual &mdash; it falls far from the regression line. It may or may not affect the slope much.</p>
+<p>An <strong>influential observation</strong> is a point that, if removed, would substantially change the regression line. Influential points typically have extreme X values (high <strong>leverage</strong>). A point at the edge of the X range acts like a lever &mdash; it can tip the entire line.</p>
+<p>A point can be:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>An outlier but not influential (large residual, middle X range &mdash; the line barely changes if you remove it)</li>
+<li>Influential but not an outlier (extreme X, sits near the line &mdash; it pulls the line toward itself, so residual is small)</li>
+<li>Both outlier and influential (extreme X, far from the line &mdash; the worst case)</li>
+</ul>
+</div>
+
+<div class="story-block trap">
+<div class="label">df Trap &mdash; Simple vs Multiple</div>
+<p>Simple regression (1 predictor): df = <strong>n - 2</strong></p>
+<p>Multiple regression (k predictors): df = <strong>n - (k + 1)</strong></p>
+<p>Getting the degrees of freedom wrong means wrong t-critical values and wrong p-values. The +1 accounts for the intercept.</p>
+</div>
+`
+  },
+  {
+    title: "5. Sampling Distributions",
+    content: `
+<div class="story-block">
+<div class="label">The Bridge from Data to Inference</div>
+<p>Chapters 1-4 were about describing data and relationships. Now we make the leap from <strong>sample</strong> to <strong>population</strong>. This is the most conceptually important chapter &mdash; it provides the foundation for everything in Chapters 6-9.</p>
+<p>The key idea: your sample statistic (like x&#772; or p&#770;) is just ONE value from a whole distribution of possible values you could have gotten. That distribution &mdash; the <strong>sampling distribution</strong> &mdash; tells us how much our statistic would vary across different random samples.</p>
+</div>
+
+<h3>What Is a Sampling Distribution?</h3>
+<div class="story-block">
+<div class="label">The Thought Experiment</div>
+<p>Imagine you could repeat your study 10,000 times, each time with a new random sample of the same size from the same population. Each sample gives you a slightly different statistic (mean, proportion, slope). The distribution of those 10,000 values IS the <strong>sampling distribution</strong>.</p>
+<p>We never actually take 10,000 samples &mdash; but probability theory tells us exactly what this distribution looks like. Three things define any sampling distribution:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Center</strong>: Where is it centered? (Is the statistic unbiased?)</li>
+<li><strong>Spread</strong>: How much does the statistic vary? (This is the <strong>standard error</strong>.)</li>
+<li><strong>Shape</strong>: Is it Normal? (This determines which tables/formulas we use.)</li>
+</ul>
+</div>
+
+<h3>Sampling Distribution of p&#770; (Sample Proportion)</h3>
+<div class="story-block">
+<div class="label">For Categorical Data</div>
+<p>If the true population proportion is &pi; and we take a random sample of size n:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Center</strong>: Mean of p&#770; = &pi; (unbiased)</li>
+<li><strong>Spread</strong>: <span class="formula">se(p&#770;) = &radic;(&pi;(1-&pi;)/n)</span></li>
+<li><strong>Shape</strong>: Approximately Normal if <strong>n&pi; &ge; 15</strong> AND <strong>n(1-&pi;) &ge; 15</strong></li>
+</ul>
+<p>Note the condition is n&pi; &ge; 15 (not 10, not 5 &mdash; this course uses 15). This ensures there are enough "successes" and "failures" for the Normal approximation to work.</p>
+</div>
+
+<h3>Sampling Distribution of x&#772; (Sample Mean)</h3>
+<div class="story-block">
+<div class="label">For Quantitative Data</div>
+<p>If the population has mean &mu; and standard deviation &sigma;, and we take a random sample of size n:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>Center</strong>: Mean of x&#772; = &mu; (unbiased)</li>
+<li><strong>Spread</strong>: <span class="formula">se(x&#772;) = &sigma;/&radic;n</span></li>
+<li><strong>Shape</strong>: Approximately Normal if <strong>n > 30</strong> (Central Limit Theorem) OR the population itself is Normal</li>
+</ul>
+</div>
+
+<div class="story-block insight">
+<div class="label">The Central Limit Theorem (CLT) &mdash; The Most Important Theorem</div>
+<p>No matter what the population looks like (skewed, bimodal, uniform &mdash; anything), the sampling distribution of x&#772; becomes approximately Normal as n gets large (usually n > 30 is sufficient).</p>
+<p>This is remarkable. It means we can do inference about means even when we have no idea what the population distribution looks like, as long as n is large enough. It is the reason why the Normal distribution shows up everywhere in statistics.</p>
+</div>
+
+<h3>The &radic;n Rule &mdash; How Standard Error Shrinks</h3>
+<div class="story-block">
+<div class="label">The Fundamental Trade-off</div>
+<p>Standard error decreases proportionally to &radic;n. This has a critical practical consequence:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>To <strong>halve</strong> the standard error (and the margin of error), you must <strong>quadruple</strong> n.</li>
+<li>To reduce the margin of error by a factor of 3, you need 9 times as many observations.</li>
+<li>Going from n=100 to n=200 (doubling n) only reduces se by a factor of &radic;2 &asymp; 1.41 &mdash; about a 29% reduction, not 50%.</li>
+</ul>
+<p>This is why very precise estimates require very large samples &mdash; and why researchers must carefully plan their sample size.</p>
+</div>
+
+<h3>Confidence Intervals</h3>
+<div class="story-block">
+<div class="label">The General Form</div>
+<p>A confidence interval gives a range of plausible values for the population parameter:</p>
+<div class="formula">estimate &plusmn; critical value &times; standard error</div>
+<p>The <strong>margin of error</strong> is the "critical value &times; standard error" part &mdash; it is the half-width of the interval.</p>
+</div>
+
+<div class="story-block">
+<div class="label">CI for a Proportion</div>
+<div class="formula">p&#770; &plusmn; z* &middot; &radic;(p&#770;(1-p&#770;)/n)</div>
+<p>Uses z* because the sampling distribution of p&#770; is Normal (when conditions are met). For 95% confidence, z* = 1.96. For 99%, z* = 2.576. For 90%, z* = 1.645.</p>
+<p><strong>Conditions</strong>: np&#770; &ge; 15 and n(1-p&#770;) &ge; 15 (using the sample proportion to check).</p>
+</div>
+
+<div class="story-block">
+<div class="label">CI for a Mean</div>
+<div class="formula">x&#772; &plusmn; t* &middot; (s/&radic;n), with df = n - 1</div>
+<p>Uses t* (not z*) because we estimate &sigma; with s, introducing extra uncertainty. The t-distribution is wider than the Normal, especially for small n. As n grows, t approaches z.</p>
+<p><strong>Conditions</strong>: n > 30 (CLT) or population approximately Normal. No severe outliers.</p>
+</div>
+
+<div class="story-block">
+<div class="label">CI for a Regression Slope</div>
+<div class="formula">b &plusmn; t* &middot; se(b), with df = n - 2</div>
+<p>If this interval does not contain 0, the slope is statistically significant &mdash; there is evidence of a linear relationship.</p>
+<p><strong>Conditions</strong>: The four regression conditions (LINE) from Chapter 4.</p>
+</div>
+
+<div class="story-block trap">
+<div class="label">The #1 CI Interpretation Trap</div>
+<p><strong>CORRECT</strong>: "We are 95% confident that the true [parameter] lies between [lower] and [upper]." This means: if we repeated the sampling process many times, about 95% of the resulting intervals would contain the true parameter.</p>
+<p><strong>WRONG</strong>: "There is a 95% probability that the true parameter is in this interval." The parameter is a fixed number &mdash; it either is or is not in the interval. The 95% refers to the <strong>method</strong>, not to any single interval.</p>
+<p>Think of it like a net: the net catches fish 95% of the time. Once you have cast the net, the fish is either in there or it is not &mdash; you cannot say there is a 95% chance the fish is in that specific cast.</p>
+</div>
+
+<h3>Sample Size Determination</h3>
+<div class="story-block">
+<div class="label">How Big a Sample Do You Need?</div>
+<p>For estimating a proportion with a desired margin of error M at confidence level z*:</p>
+<div class="formula">n = &pi;(1-&pi;) &middot; (z*/M)&sup2;</div>
+<p>If &pi; is unknown, use &pi; = 0.5 (this gives the <strong>largest</strong> possible n, so it is the most conservative/safe choice &mdash; because &pi;(1-&pi;) is maximized at &pi; = 0.5).</p>
+<p><strong>Always round UP</strong> to the next integer. If you get n = 1067.1, use n = 1068.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Sample Size</div>
+<p>You want to estimate the proportion of CS students who use Linux, with a margin of error of M = 0.03 at 95% confidence. You have no prior estimate of &pi;.</p>
+<p>z* = 1.96 for 95% confidence. Use &pi; = 0.5 (unknown).</p>
+<p>n = 0.5(1-0.5) &middot; (1.96/0.03)&sup2; = 0.25 &middot; (65.33)&sup2; = 0.25 &middot; 4268.44 = 1067.11</p>
+<p>Round UP: <strong>n = 1068</strong></p>
+<p>If a previous study found &pi; &asymp; 0.30, then: n = 0.30(0.70)(1.96/0.03)&sup2; = 0.21 &middot; 4268.44 = 896.37 &rarr; <strong>n = 897</strong></p>
+<p>Using prior information reduces the required sample size because &pi;(1-&pi;) is smaller when &pi; is away from 0.5.</p>
+</div>
+`
+  },
+  {
+    title: "6. Hypothesis Testing",
+    content: `
+<div class="story-block">
+<div class="label">The Engine of Statistical Inference</div>
+<p>Confidence intervals tell you the range of plausible values for a parameter. Hypothesis testing asks a sharper question: "Is there evidence against a specific claim?" Every hypothesis test follows the same 5-step framework. Learn it once, apply it to every test in Chapters 6-9.</p>
+</div>
+
+<h3>The 5-Step Framework &mdash; In Full Detail</h3>
+<div class="story-block">
+<div class="label">Step 1: Assumptions (Conditions)</div>
+<p>Before you even state hypotheses, check the conditions for the specific test. If conditions are violated, the test results may be invalid. Each test has its own conditions:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>z-test for proportion: random sample, n&pi;&#8320; &ge; 15 and n(1-&pi;&#8320;) &ge; 15 (use the null value)</li>
+<li>t-test for mean: random sample, n > 30 or population Normal, no severe outliers</li>
+<li>t-test for slope: the LINE conditions (linearity, independence, normality, equal spread)</li>
+<li>Chi-squared: random sample, all expected counts &ge; 5</li>
+</ul>
+<p>On the exam, <strong>always state and check assumptions explicitly</strong>. Marks are given for this.</p>
+</div>
+
+<div class="story-block">
+<div class="label">Step 2: Hypotheses</div>
+<p><strong>H&#8320; (null hypothesis)</strong>: The "no effect" or "no difference" claim. It always contains an equality (=). This is the assumption we test against.</p>
+<p><strong>H&#8336; (alternative hypothesis)</strong>: What the researcher is trying to find evidence for. It contains &ne;, >, or <.</p>
+<p><strong>Two-sided</strong> (H&#8336;: parameter &ne; value): "Is there a difference?" No specified direction.</p>
+<p><strong>One-sided</strong> (H&#8336;: parameter > value or parameter < value): "Is it specifically higher/lower?"</p>
+<p>The direction comes from the <strong>research question</strong>, not from looking at the data. Choosing after seeing the data is called "data snooping" and invalidates the test.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Examples of Hypotheses</div>
+<p><strong>"Do CS students sleep less than 7 hours?"</strong></p>
+<p>H&#8320;: &mu; = 7, H&#8336;: &mu; < 7 (one-sided, less than)</p>
+<p><strong>"Is there a difference in pass rates between men and women?"</strong></p>
+<p>H&#8320;: &pi;&#8321; = &pi;&#8322;, H&#8336;: &pi;&#8321; &ne; &pi;&#8322; (two-sided)</p>
+<p><strong>"Does study time predict exam score?"</strong> (testing the slope)</p>
+<p>H&#8320;: &beta; = 0, H&#8336;: &beta; &ne; 0 (two-sided &mdash; is there any linear relationship?)</p>
+</div>
+
+<div class="story-block">
+<div class="label">Step 3: Test Statistic</div>
+<p>Every test statistic follows the same pattern:</p>
+<div class="formula">test statistic = (estimate - null value) / standard error</div>
+<p>This measures: "How many standard errors is my sample result from the null hypothesis value?" The further away, the more evidence against H&#8320;.</p>
+
+<table>
+<tr><th>Test</th><th>Formula</th><th>Distribution</th></tr>
+<tr><td>z-test (proportion)</td><td>z = (p&#770; - &pi;&#8320;) / &radic;(&pi;&#8320;(1-&pi;&#8320;)/n)</td><td>Standard Normal</td></tr>
+<tr><td>t-test (mean)</td><td>t = (x&#772; - &mu;&#8320;) / (s/&radic;n)</td><td>t with df = n-1</td></tr>
+<tr><td>t-test (slope)</td><td>t = (b - 0) / se(b)</td><td>t with df = n-2</td></tr>
+</table>
+<p>Notice: for the z-test, we use &pi;&#8320; (the null value) in the standard error &mdash; because under H&#8320; we assume &pi;&#8320; is the true proportion. For the confidence interval, we used p&#770;. This difference sometimes confuses students.</p>
+</div>
+
+<div class="story-block">
+<div class="label">Step 4: P-value</div>
+<p>The <strong>p-value</strong> is the probability of obtaining a test statistic as extreme as (or more extreme than) the one observed, <strong>assuming H&#8320; is true</strong>.</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Two-sided: p-value = P(|Z| &ge; |z_obs|) = 2 &times; P(Z &ge; |z_obs|)</li>
+<li>One-sided (>): p-value = P(Z &ge; z_obs)</li>
+<li>One-sided (<): p-value = P(Z &le; z_obs)</li>
+</ul>
+<p>A small p-value means: "If H&#8320; were true, it would be very unlikely to see data like mine." This is evidence against H&#8320;.</p>
+</div>
+
+<div class="story-block">
+<div class="label">Step 5: Conclusion</div>
+<p>Compare the p-value to the significance level &alpha; (usually 0.05):</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>If p-value &le; &alpha;: <strong>Reject H&#8320;</strong>. "There is sufficient evidence at the &alpha; level that [alternative in context]."</li>
+<li>If p-value > &alpha;: <strong>Fail to reject H&#8320;</strong>. "There is insufficient evidence at the &alpha; level that [alternative in context]."</li>
+</ul>
+</div>
+
+<div class="story-block trap">
+<div class="label">The Three Fatal Mistakes on Exams</div>
+<p><strong>1. NEVER say "accept H&#8320;"</strong>. Say "fail to reject H&#8320;" or "insufficient evidence to conclude H&#8336;." Absence of evidence is NOT evidence of absence. Maybe your sample was too small to detect a real effect.</p>
+<p><strong>2. P-value is NOT P(H&#8320; is true)</strong>. It is P(observing this data or more extreme | H&#8320; is true). The p-value is a property of the data given the hypothesis, not a probability of the hypothesis.</p>
+<p><strong>3. Do not choose one-sided vs two-sided based on your data</strong>. The direction must come from the research question stated BEFORE seeing the data. "Is there a difference?" &rarr; two-sided. "Is it higher?" &rarr; one-sided. If the question says "test whether there is a difference," it is two-sided even if the data clearly goes one way.</p>
+</div>
+
+<h3>Type I Error, Type II Error, and Power</h3>
+<div class="story-block">
+<div class="label">The Error Table</div>
+<table>
+<tr><th></th><th>H&#8320; is actually True</th><th>H&#8320; is actually False</th></tr>
+<tr><td><strong>Reject H&#8320;</strong></td><td style="color:var(--red);">Type I error (&alpha;)</td><td style="color:var(--green);">Correct decision (Power = 1-&beta;)</td></tr>
+<tr><td><strong>Fail to reject H&#8320;</strong></td><td style="color:var(--green);">Correct decision</td><td style="color:var(--red);">Type II error (&beta;)</td></tr>
+</table>
+
+<p><strong>Type I error (&alpha;)</strong>: Rejecting H&#8320; when it is actually true. A "false positive." &alpha; is the probability of this happening, and YOU choose it (usually 0.05). Think of it as a "false alarm."</p>
+<p><strong>Type II error (&beta;)</strong>: Failing to reject H&#8320; when it is actually false. A "false negative." You fail to detect a real effect. Think of it as a "missed detection."</p>
+<p><strong>Power = 1 - &beta;</strong>: The probability of correctly rejecting H&#8320; when it is false. The probability of detecting a real effect. We want high power (typically &ge; 0.80).</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">What Affects Power?</div>
+<p>Power increases when:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>n increases</strong>: More data &rarr; smaller standard error &rarr; easier to detect effects</li>
+<li><strong>Effect size increases</strong>: Bigger real difference &rarr; easier to spot</li>
+<li><strong>&alpha; increases</strong>: Using &alpha; = 0.10 instead of 0.05 makes it easier to reject (but increases Type I risk)</li>
+<li><strong>&sigma; decreases</strong>: Less noise &rarr; clearer signal</li>
+<li><strong>One-sided test</strong> (when appropriate): Concentrates rejection region, making it easier to detect effects in one direction</li>
+</ul>
+<p>The key trade-off: Decreasing &alpha; (fewer false alarms) increases &beta; (more missed detections). You cannot minimize both simultaneously with the same sample size. The only free lunch is increasing n.</p>
+</div>
+
+<h3>Statistical vs Practical Significance</h3>
+<div class="story-block warning">
+<div class="label">A Significant Result May Not Be Important</div>
+<p>With a large enough sample, even tiny, meaningless effects become statistically significant. Example: a study of 100,000 people finds the average sleep difference between coffee drinkers and non-drinkers is 2 minutes (p = 0.001). Statistically significant? Yes. Practically important? No one cares about 2 minutes.</p>
+<p>Always look at the <strong>effect size</strong> (how big is the difference) alongside the p-value (how sure are you). Report confidence intervals &mdash; they show both the precision and the magnitude of the effect.</p>
+</div>
+`
+  },
+  {
+    title: "7. Comparing Groups",
+    content: `
+<div class="story-block">
+<div class="label">From One Group to Two</div>
+<p>Chapter 6 gave us the framework for testing claims about a single parameter. Now we compare two groups &mdash; do they differ? The critical question that determines your entire approach: <strong>are the two groups independent or paired?</strong></p>
+</div>
+
+<h3>The Decision: Independent vs Paired</h3>
+<div class="story-block trap">
+<div class="label">The #1 Exam Distinction &mdash; Get This Right First</div>
+<p><strong>Paired (dependent)</strong> data: Each observation in one group is naturally matched with a specific observation in the other. There is a meaningful one-to-one correspondence.</p>
+<p>Clues for paired:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>"Before and after" on the <strong>same</strong> subjects</li>
+<li>"Matched pairs" (each subject measured twice)</li>
+<li>"Each participant was tested under both conditions"</li>
+<li>Same group at two time points</li>
+<li>Twins, siblings, or matched controls</li>
+</ul>
+<p><strong>Independent</strong> data: The two groups are completely separate. Knowing who is in group 1 tells you nothing about group 2.</p>
+<p>Clues for independent:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>"Two separate groups of people"</li>
+<li>"Men vs women," "treatment vs control" (different people in each)</li>
+<li>"Randomly assigned to two groups"</li>
+</ul>
+<p><strong>The acid test</strong>: Can you draw a line from each observation in group 1 to a specific partner in group 2? Yes &rarr; paired. No &rarr; independent.</p>
+</div>
+
+<h3>Independent Two-Sample t-Test</h3>
+<div class="story-block">
+<div class="label">When: Comparing Means of Two Separate Groups</div>
+<p><strong>Setup</strong>: Group 1 has n&#8321; observations with mean x&#772;&#8321; and standard deviation s&#8321;. Group 2 has n&#8322; observations with mean x&#772;&#8322; and standard deviation s&#8322;.</p>
+<p><strong>Hypotheses</strong>:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>H&#8320;: &mu;&#8321; - &mu;&#8322; = 0 (no difference in population means)</li>
+<li>H&#8336;: &mu;&#8321; - &mu;&#8322; &ne; 0 (two-sided) or > 0 or < 0 (one-sided)</li>
+</ul>
+<p><strong>Test statistic</strong>:</p>
+<div class="formula">t = (x&#772;&#8321; - x&#772;&#8322;) / &radic;(s&#8321;&sup2;/n&#8321; + s&#8322;&sup2;/n&#8322;)</div>
+<p><strong>Degrees of freedom</strong>: The exact formula (Welch's) is complex. In practice: use software. For a conservative hand calculation: df = min(n&#8321; - 1, n&#8322; - 1).</p>
+<p><strong>Confidence interval</strong> for &mu;&#8321; - &mu;&#8322;:</p>
+<div class="formula">(x&#772;&#8321; - x&#772;&#8322;) &plusmn; t* &middot; &radic;(s&#8321;&sup2;/n&#8321; + s&#8322;&sup2;/n&#8322;)</div>
+<p><strong>Assumptions</strong>:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Both samples are random and independent</li>
+<li>Both populations are approximately Normal (or both n&#8321;, n&#8322; > 30 by CLT)</li>
+<li>No severe outliers in either group</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Independent t-Test</div>
+<p>Tutorial attenders (n&#8321; = 45): x&#772;&#8321; = 72.3, s&#8321; = 11.2</p>
+<p>Non-attenders (n&#8322; = 38): x&#772;&#8322; = 65.8, s&#8322; = 13.5</p>
+<p>Is there evidence of a difference in mean exam scores?</p>
+<p>H&#8320;: &mu;&#8321; - &mu;&#8322; = 0, H&#8336;: &mu;&#8321; - &mu;&#8322; &ne; 0</p>
+<p>se = &radic;(11.2&sup2;/45 + 13.5&sup2;/38) = &radic;(2.789 + 4.797) = &radic;7.586 = 2.754</p>
+<p>t = (72.3 - 65.8) / 2.754 = 6.5 / 2.754 = <strong>2.36</strong></p>
+<p>df = min(44, 37) = 37 (conservative). From t-table: p-value is between 0.02 and 0.025 (two-sided).</p>
+<p>Since p < 0.05, reject H&#8320;. There is sufficient evidence that mean exam scores differ between tutorial attenders and non-attenders.</p>
+</div>
+
+<h3>Paired t-Test</h3>
+<div class="story-block">
+<div class="label">When: Same Subjects Measured Twice</div>
+<p>The paired t-test is just a <strong>one-sample t-test on the differences</strong>. That is the key insight.</p>
+<p><strong>Step 1</strong>: For each pair, compute the difference: d&#7522; = x&#8321;&#7522; - x&#8322;&#7522;</p>
+<p><strong>Step 2</strong>: Now you have n differences. Compute d&#772; (mean of differences) and s_d (standard deviation of differences).</p>
+<p><strong>Hypotheses</strong>:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>H&#8320;: &mu;_d = 0 (the mean difference in the population is 0)</li>
+<li>H&#8336;: &mu;_d &ne; 0 (or > 0 or < 0)</li>
+</ul>
+<p><strong>Test statistic</strong>:</p>
+<div class="formula">t = d&#772; / (s_d / &radic;n), with df = n - 1</div>
+<p>where n = <strong>number of pairs</strong> (not total observations).</p>
+<p><strong>Confidence interval</strong> for &mu;_d:</p>
+<div class="formula">d&#772; &plusmn; t* &middot; (s_d / &radic;n)</div>
+<p><strong>Assumptions</strong>:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>The differences are a random sample from the population of differences</li>
+<li>The differences are approximately Normal (or n > 30)</li>
+<li>No severe outliers in the differences</li>
+</ul>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Paired t-Test</div>
+<p>8 patients had their blood pressure measured before and after a new medication.</p>
+<table>
+<tr><th>Patient</th><th>Before</th><th>After</th><th>Difference (B-A)</th></tr>
+<tr><td>1</td><td>142</td><td>138</td><td>4</td></tr>
+<tr><td>2</td><td>156</td><td>145</td><td>11</td></tr>
+<tr><td>3</td><td>128</td><td>130</td><td>-2</td></tr>
+<tr><td>4</td><td>147</td><td>140</td><td>7</td></tr>
+<tr><td>5</td><td>138</td><td>132</td><td>6</td></tr>
+<tr><td>6</td><td>151</td><td>143</td><td>8</td></tr>
+<tr><td>7</td><td>145</td><td>141</td><td>4</td></tr>
+<tr><td>8</td><td>160</td><td>148</td><td>12</td></tr>
+</table>
+<p>d&#772; = (4+11-2+7+6+8+4+12)/8 = 50/8 = <strong>6.25</strong></p>
+<p>s_d = &radic;(&Sigma;(d&#7522; - d&#772;)&sup2; / 7) = &radic;(136.5/7) = &radic;19.5 = <strong>4.42</strong></p>
+<p>t = 6.25 / (4.42/&radic;8) = 6.25 / 1.563 = <strong>4.00</strong></p>
+<p>df = 8 - 1 = <strong>7</strong>. From t-table: p-value < 0.01 (two-sided).</p>
+<p>Reject H&#8320;. There is strong evidence that the medication reduces blood pressure (mean reduction of 6.25 mmHg).</p>
+<p><strong>Note</strong>: df = 7 (number of pairs - 1), NOT 15 (total observations - 1). This is a common mistake.</p>
+</div>
+
+<h3>z-Test for One Proportion</h3>
+<div class="story-block">
+<div class="label">When: Testing a Categorical Variable Against a Known Value</div>
+<p>You have one sample and want to test if the population proportion equals some specific value &pi;&#8320;.</p>
+<p><strong>Hypotheses</strong>: H&#8320;: &pi; = &pi;&#8320; vs H&#8336;: &pi; &ne; &pi;&#8320; (or > or <)</p>
+<p><strong>Test statistic</strong>:</p>
+<div class="formula">z = (p&#770; - &pi;&#8320;) / &radic;(&pi;&#8320;(1-&pi;&#8320;)/n)</div>
+<p>Note: use &pi;&#8320; (not p&#770;) in the standard error &mdash; under H&#8320;, we assume &pi;&#8320; is the true value.</p>
+<p><strong>Assumptions</strong>: n&pi;&#8320; &ge; 15 and n(1-&pi;&#8320;) &ge; 15</p>
+</div>
+
+<h3>z-Test for Two Proportions</h3>
+<div class="story-block">
+<div class="label">When: Comparing Proportions from Two Independent Groups</div>
+<p>You have two groups and want to test if they have the same population proportion.</p>
+<p><strong>Hypotheses</strong>: H&#8320;: &pi;&#8321; = &pi;&#8322; vs H&#8336;: &pi;&#8321; &ne; &pi;&#8322;</p>
+<p>Under H&#8320;, the two proportions are equal, so we estimate this common proportion with the <strong>pooled proportion</strong>:</p>
+<div class="formula">p&#770;_pooled = (x&#8321; + x&#8322;) / (n&#8321; + n&#8322;)</div>
+<p>where x&#8321; and x&#8322; are the counts of successes in each group.</p>
+<p><strong>Test statistic</strong>:</p>
+<div class="formula">z = (p&#770;&#8321; - p&#770;&#8322;) / &radic;(p&#770;_pooled(1-p&#770;_pooled)(1/n&#8321; + 1/n&#8322;))</div>
+<p><strong>Assumptions</strong>: Both groups have at least 15 successes and 15 failures (using pooled counts).</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">CI and Hypothesis Test Connection</div>
+<p>A confidence interval and a hypothesis test are two sides of the same coin. Specifically:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>If the 95% CI for &mu;&#8321; - &mu;&#8322; does <strong>not contain 0</strong> &rarr; you would reject H&#8320;: &mu;&#8321; = &mu;&#8322; at &alpha; = 0.05</li>
+<li>If the 95% CI for &mu;&#8321; - &mu;&#8322; <strong>contains 0</strong> &rarr; you would fail to reject H&#8320; at &alpha; = 0.05</li>
+</ul>
+<p>This works for any parameter: if the null value is outside the CI, reject; if inside, do not reject. (There is a small subtlety for proportions because the CI and test use slightly different se formulas, but the principle holds.)</p>
+</div>
+`
+  },
+  {
+    title: "8. Categorical Analysis",
+    content: `
+<div class="story-block">
+<div class="label">When Both Variables Are Categorical</div>
+<p>In Chapter 7 we compared proportions between two groups. Now we handle the general case: two categorical variables with any number of categories. The tool is the <strong>chi-squared (&chi;&sup2;) test of independence</strong>. This is Q5 on the exam.</p>
+</div>
+
+<h3>Chi-Squared Test of Independence: The Full Procedure</h3>
+<div class="story-block">
+<div class="label">Step-by-Step Framework</div>
+<p><strong>Setup</strong>: You have a contingency table with r rows and c columns.</p>
+<p><strong>Hypotheses</strong>:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>H&#8320;: The two variables are independent (no association)</li>
+<li>H&#8336;: The two variables are associated (not independent)</li>
+</ul>
+<p><strong>Step 1 &mdash; Expected counts</strong>: If the variables were independent, what counts would we expect?</p>
+<div class="formula">f&#7497; = (row total &times; column total) / grand total n</div>
+<p>The logic: if variables are independent, the proportion in any cell should be the row proportion times the column proportion times n.</p>
+<p><strong>Step 2 &mdash; Check assumption</strong>: ALL expected counts must be &ge; 5. If any f&#7497; < 5, the &chi;&sup2; approximation is unreliable.</p>
+<p><strong>Step 3 &mdash; Test statistic</strong>:</p>
+<div class="formula">&chi;&sup2; = &Sigma; (f&#8338; - f&#7497;)&sup2; / f&#7497;</div>
+<p>Sum over all cells. Each cell contributes (observed - expected)&sup2; / expected. Cells where f&#8338; is far from f&#7497; contribute the most.</p>
+<p><strong>Step 4 &mdash; Degrees of freedom</strong>:</p>
+<div class="formula">df = (r - 1)(c - 1)</div>
+<p><strong>Step 5 &mdash; P-value</strong>: Find from the chi-squared table (Table C). The p-value is always the right-tail area, because larger &chi;&sup2; values indicate more evidence against independence.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Full Worked Example: Chi-Squared Test</div>
+<p>A study examines whether programming language preference is associated with job sector. 300 developers were surveyed:</p>
+<table>
+<tr><th></th><th>Python</th><th>Java</th><th>JavaScript</th><th>Total</th></tr>
+<tr><td><strong>Tech</strong></td><td>60</td><td>30</td><td>50</td><td>140</td></tr>
+<tr><td><strong>Finance</strong></td><td>25</td><td>45</td><td>20</td><td>90</td></tr>
+<tr><td><strong>Other</strong></td><td>15</td><td>25</td><td>30</td><td>70</td></tr>
+<tr><td><strong>Total</strong></td><td>100</td><td>100</td><td>100</td><td>300</td></tr>
+</table>
+<p><strong>Expected counts</strong> (using f&#7497; = row total &times; col total / 300):</p>
+<table>
+<tr><th></th><th>Python</th><th>Java</th><th>JavaScript</th></tr>
+<tr><td><strong>Tech</strong></td><td>140&times;100/300 = 46.67</td><td>46.67</td><td>46.67</td></tr>
+<tr><td><strong>Finance</strong></td><td>90&times;100/300 = 30.00</td><td>30.00</td><td>30.00</td></tr>
+<tr><td><strong>Other</strong></td><td>70&times;100/300 = 23.33</td><td>23.33</td><td>23.33</td></tr>
+</table>
+<p>All f&#7497; &ge; 5. Good.</p>
+<p><strong>&chi;&sup2; calculation</strong>:</p>
+<p>Tech-Python: (60-46.67)&sup2;/46.67 = 177.69/46.67 = 3.81</p>
+<p>Tech-Java: (30-46.67)&sup2;/46.67 = 277.89/46.67 = 5.95</p>
+<p>Tech-JS: (50-46.67)&sup2;/46.67 = 11.09/46.67 = 0.24</p>
+<p>Finance-Python: (25-30)&sup2;/30 = 25/30 = 0.83</p>
+<p>Finance-Java: (45-30)&sup2;/30 = 225/30 = 7.50</p>
+<p>Finance-JS: (20-30)&sup2;/30 = 100/30 = 3.33</p>
+<p>Other-Python: (15-23.33)&sup2;/23.33 = 69.39/23.33 = 2.97</p>
+<p>Other-Java: (25-23.33)&sup2;/23.33 = 2.79/23.33 = 0.12</p>
+<p>Other-JS: (30-23.33)&sup2;/23.33 = 44.49/23.33 = 1.91</p>
+<p><strong>&chi;&sup2; = 3.81 + 5.95 + 0.24 + 0.83 + 7.50 + 3.33 + 2.97 + 0.12 + 1.91 = 26.66</strong></p>
+<p>df = (3-1)(3-1) = <strong>4</strong></p>
+<p>From Table C: &chi;&sup2; = 26.66 with df = 4 gives p-value < 0.001.</p>
+<p><strong>Conclusion</strong>: Reject H&#8320;. There is very strong evidence that programming language preference and job sector are associated.</p>
+</div>
+
+<div class="story-block trap">
+<div class="label">Chi-Squared Is ALWAYS Two-Sided</div>
+<p>You cannot do a one-sided chi-squared test. The test detects ANY deviation from independence &mdash; it does not test a specific direction. The &chi;&sup2; statistic is always positive (it is a sum of squared terms), and larger values always mean more evidence of association.</p>
+</div>
+
+<h3>For 2&times;2 Tables: The &chi;&sup2; = z&sup2; Connection</h3>
+<div class="story-block insight">
+<div class="label">Two Tests, Same Answer</div>
+<p>When you have a 2&times;2 contingency table (2 rows, 2 columns), you could analyze it with either:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>A z-test for two proportions (from Chapter 7)</li>
+<li>A &chi;&sup2; test of independence</li>
+</ul>
+<p>They give the <strong>exact same two-sided p-value</strong>. In fact, &chi;&sup2; = z&sup2;. The z-test has the advantage that it can be one-sided; the &chi;&sup2; test cannot.</p>
+</div>
+
+<h3>Standardized Residuals: Which Cells Drive the Result?</h3>
+<div class="story-block">
+<div class="label">Finding the Story Behind the Test</div>
+<p>When you reject H&#8320;, you know there IS an association. But which specific cells deviate from independence? The <strong>standardized residual</strong> for each cell tells you:</p>
+<div class="formula">z = (f&#8338; - f&#7497;) / se</div>
+<p>where:</p>
+<div class="formula">se = &radic;(f&#7497; &middot; (1 - row proportion) &middot; (1 - column proportion))</div>
+<p>Here "row proportion" means (row total / n) and "column proportion" means (column total / n).</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>z > 0: More observations in this cell than expected under independence</li>
+<li>z < 0: Fewer observations than expected</li>
+<li><strong>|z| > 3</strong>: This cell contributes notably to the association</li>
+</ul>
+</div>
+
+<div class="story-block trap">
+<div class="label">The Threshold Is 3, Not 2!</div>
+<p>For individual z-scores, we usually use |z| > 2 as a cutoff. But for standardized residuals in contingency tables, the threshold is <strong>|z| > 3</strong>. This is because we are making multiple comparisons (one for each cell), so we need a stricter threshold to avoid false positives. This is a favorite exam trap &mdash; do not use 2.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Standardized Residual Example</div>
+<p>From our example above, consider the Finance-Java cell: f&#8338; = 45, f&#7497; = 30.</p>
+<p>Row proportion = 90/300 = 0.30, Column proportion = 100/300 = 0.333</p>
+<p>se = &radic;(30 &times; (1-0.30) &times; (1-0.333)) = &radic;(30 &times; 0.70 &times; 0.667) = &radic;14.01 = 3.74</p>
+<p>z = (45 - 30) / 3.74 = 15 / 3.74 = <strong>4.01</strong></p>
+<p>Since |4.01| > 3, Finance-Java is a notably large cell &mdash; many more Finance developers prefer Java than we would expect under independence. This is a key driver of the overall association.</p>
+</div>
+
+<h3>Measures of Association for 2&times;2 Tables</h3>
+<div class="story-block">
+<div class="label">Quantifying the Strength of Association</div>
+<p>The &chi;&sup2; test tells you IF there is an association. These measures tell you HOW STRONG it is:</p>
+
+<p><strong>Difference of proportions</strong>: p&#770;&#8321; - p&#770;&#8322;</p>
+<p>Simple and interpretable: "The proportion in group 1 is [X] percentage points higher than in group 2." Example: 45% vs 30% &rarr; difference = 15 percentage points.</p>
+
+<p><strong>Relative risk (RR)</strong>: p&#770;&#8321; / p&#770;&#8322;</p>
+<p>"Group 1 is [RR] times as likely as group 2." Example: 0.45/0.30 = 1.5 &rarr; "Group 1 is 1.5 times as likely." RR = 1 means no difference.</p>
+
+<p><strong>Odds ratio (OR)</strong>:</p>
+<div class="formula">OR = [p&#770;&#8321;/(1-p&#770;&#8321;)] / [p&#770;&#8322;/(1-p&#770;&#8322;)]</div>
+<p>"The odds of success in group 1 are [OR] times the odds in group 2." OR = 1 means no association. OR > 1 means higher odds in group 1.</p>
+<p>The odds ratio is especially important in medical research and logistic regression because it has nice mathematical properties (it is symmetric and works with retrospective studies).</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Quick Comparison</div>
+<p>Group 1: 45/100 = 0.45 success rate. Group 2: 30/100 = 0.30 success rate.</p>
+<p>Difference: 0.45 - 0.30 = <strong>0.15</strong> (15 percentage points more)</p>
+<p>Relative risk: 0.45/0.30 = <strong>1.50</strong> (1.5 times as likely)</p>
+<p>Odds ratio: (0.45/0.55) / (0.30/0.70) = 0.818/0.429 = <strong>1.91</strong> (odds are 1.91 times higher)</p>
+<p>All three say "group 1 does better" but in different ways. The exam may ask you to compute and interpret any of these.</p>
+</div>
+
+<h3>Goodness of Fit Test</h3>
+<div class="story-block">
+<div class="label">Testing a Distribution for ONE Variable</div>
+<p>The &chi;&sup2; test of independence compares two categorical variables. The <strong>goodness of fit test</strong> checks whether a single categorical variable follows a hypothesized distribution.</p>
+<p>Example: A die is rolled 120 times. Are the outcomes consistent with a fair die (each face has probability 1/6)?</p>
+<p>H&#8320;: &pi;&#8321; = &pi;&#8322; = ... = &pi;&#8326; = 1/6</p>
+<p>Expected count for each face: 120 &times; 1/6 = 20</p>
+<p>Test statistic: same formula &chi;&sup2; = &Sigma;(f&#8338; - f&#7497;)&sup2;/f&#7497;, but now df = number of categories - 1 = 5.</p>
+<p>The key difference from the test of independence: df = k - 1 (number of categories minus 1), not (r-1)(c-1).</p>
+</div>
+`
+  },
+  {
+    title: "9. Multiple Regression",
+    content: `
+<div class="story-block">
+<div class="label">The Full Picture</div>
+<p>In Chapter 4 we had one predictor. In reality, outcomes depend on many variables simultaneously. Multiple regression lets us model Y as a function of <strong>multiple</strong> predictors, control for confounders, and understand how variables interact. This is the advanced part of Q3 on the exam and ties together everything from the entire course.</p>
+</div>
+
+<h3>The Multiple Regression Model</h3>
+<div class="story-block">
+<div class="label">From One Predictor to Many</div>
+<p><strong>Population model</strong>:</p>
+<div class="formula">&mu;&#7527; = &alpha; + &beta;&#8321;X&#8321; + &beta;&#8322;X&#8322; + ... + &beta;&#8342;X&#8342;</div>
+<p><strong>Sample equation</strong>:</p>
+<div class="formula">y&#770; = a + b&#8321;X&#8321; + b&#8322;X&#8322; + ... + b&#8342;X&#8342;</div>
+<p>The key conceptual leap: each &beta;&#8198;j is a <strong>partial regression coefficient</strong>. It measures the effect of X&#8198;j on Y <strong>while holding all other predictors constant</strong>. This "holding constant" language is critical and the exam will always ask for it.</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">Interpretation &mdash; The Most Common Exam Question</div>
+<p><strong>Template</strong>: "For each 1-unit increase in X&#8198;j, the predicted Y changes by b&#8198;j units, <strong>holding all other variables constant</strong>."</p>
+<p><strong>Example</strong>: Model predicts salary from years of experience (X&#8321;) and education level (X&#8322;). If b&#8321; = 3200:</p>
+<p>"For each additional year of experience, the predicted salary increases by $3,200, holding education level constant."</p>
+<p>This is fundamentally different from simple regression, where b captures the total association (including indirect effects through other variables). In multiple regression, each b&#8198;j captures only the <strong>direct</strong> effect after adjusting for the others.</p>
+</div>
+
+<h3>R and R&sup2; in Multiple Regression</h3>
+<div class="story-block">
+<div class="label">Multiple Correlation Coefficient</div>
+<p><strong>R</strong> (capital) = the correlation between observed Y and predicted Y&#770;. Unlike little r, R is always &ge; 0 (there is no "negative" multiple correlation). With one predictor: R = |r|.</p>
+<p><strong>R&sup2;</strong> = proportion of variability in Y explained by ALL predictors together. Same formula as before:</p>
+<div class="formula">R&sup2; = 1 - SSE / Total SS = Regression SS / Total SS</div>
+</div>
+
+<div class="story-block trap">
+<div class="label">The R&sup2; Trap: It Never Decreases</div>
+<p>Adding a predictor to the model <strong>can never decrease R&sup2;</strong> &mdash; even if the new predictor is completely useless (like random noise). At worst, the extra predictor explains a tiny bit of variability by chance, so R&sup2; stays the same or goes up slightly.</p>
+<p>This means R&sup2; alone is NOT a good criterion for model selection. A model with 50 useless predictors will have a higher R&sup2; than a clean model with 3 meaningful predictors, but it will predict worse on new data.</p>
+</div>
+
+<h3>The F-Test for Overall Model Significance</h3>
+<div class="story-block">
+<div class="label">Does the Model Explain ANYTHING?</div>
+<p>Before looking at individual predictors, test whether the model as a whole is useful:</p>
+<p><strong>H&#8320;</strong>: &beta;&#8321; = &beta;&#8322; = ... = &beta;&#8342; = 0 (none of the predictors matter)</p>
+<p><strong>H&#8336;</strong>: At least one &beta;&#8198;j &ne; 0</p>
+<div class="formula">F = (R&sup2;/k) / ((1 - R&sup2;) / (n - (k+1)))</div>
+<p>Or equivalently, using sums of squares:</p>
+<div class="formula">F = (Regression SS / k) / (SSE / (n - (k+1)))</div>
+<p><strong>df&#8321; = k</strong> (number of predictors), <strong>df&#8322; = n - (k+1)</strong> (sample size minus number of parameters estimated)</p>
+<p>A large F means the model explains significantly more variability than you would expect by chance. If F is significant, at least one predictor is useful &mdash; but this does not tell you WHICH one(s). For that, use individual t-tests.</p>
+</div>
+
+<h3>The F-Test for Nested Models</h3>
+<div class="story-block">
+<div class="label">Is the Bigger Model Worth It?</div>
+<p>Often you want to compare two models: a smaller "reduced" model and a larger "full" model that includes extra predictors. The <strong>partial F-test</strong> asks: do the extra predictors significantly improve the model?</p>
+<p><strong>H&#8320;</strong>: The extra predictors all have &beta; = 0 (they do not help)</p>
+<p><strong>H&#8336;</strong>: At least one of the extra predictors has &beta; &ne; 0</p>
+<div class="formula">F = ((SSE_reduced - SSE_full) / (k_full - k_reduced)) / (SSE_full / (n - (k_full + 1)))</div>
+<p>df&#8321; = k_full - k_reduced (number of extra predictors), df&#8322; = n - (k_full + 1)</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Worked Example: Nested F-Test</div>
+<p>You are predicting house price. Model 1 (reduced) uses square footage only (k&#8321; = 1). Model 2 (full) adds number of bedrooms and age (k&#8322; = 3). n = 100 houses.</p>
+<p>Model 1: SSE&#8321; = 85,000</p>
+<p>Model 2: SSE&#8322; = 62,000</p>
+<p>Number of extra predictors = 3 - 1 = 2</p>
+<p>F = ((85,000 - 62,000) / 2) / (62,000 / (100 - 4))</p>
+<p>F = (23,000 / 2) / (62,000 / 96)</p>
+<p>F = 11,500 / 645.8 = <strong>17.81</strong></p>
+<p>df&#8321; = 2, df&#8322; = 96. From F-table: p-value < 0.001.</p>
+<p>Reject H&#8320;. Adding bedrooms and age significantly improves the model beyond square footage alone.</p>
+</div>
+
+<h3>t-Test for Individual Coefficients</h3>
+<div class="story-block">
+<div class="label">Does This Specific Predictor Matter?</div>
+<p>For each predictor, we test:</p>
+<p>H&#8320;: &beta;&#8198;j = 0 (this predictor does not contribute, given the others are in the model)</p>
+<p>H&#8336;: &beta;&#8198;j &ne; 0</p>
+<div class="formula">t = b&#8198;j / se(b&#8198;j), with df = n - (k+1)</div>
+<p>This is the SAME test statistic pattern as always: (estimate - null) / se.</p>
+<p><strong>Critical warning</strong>: The t-test for b&#8198;j tests whether X&#8198;j contributes <strong>beyond what the other predictors already explain</strong>. A predictor can have a large simple correlation with Y but a non-significant t-test in the multiple model &mdash; because another predictor already captures that information. This is the multicollinearity issue (see below).</p>
+</div>
+
+<h3>Interaction Terms</h3>
+<div class="story-block warning">
+<div class="label">When the Effect of One Variable Depends on Another</div>
+<p>The basic multiple regression model assumes that the effect of X&#8321; on Y is the same regardless of the value of X&#8322;. But sometimes the effect <strong>depends on</strong> the level of another variable. We model this with an <strong>interaction term</strong>:</p>
+<div class="formula">&mu;&#7527; = &alpha; + &beta;&#8321;X&#8321; + &beta;&#8322;X&#8322; + &beta;&#8323;(X&#8321; &middot; X&#8322;)</div>
+<p>Now the slope of X&#8321; is no longer a single number. It is:</p>
+<div class="formula">Slope of X&#8321; = &beta;&#8321; + &beta;&#8323; &middot; X&#8322;</div>
+<p>The slope changes depending on the value of X&#8322;. That is what "interaction" means.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Interaction Example</div>
+<p>Model: Predicted exam score = 30 + 5(StudyHours) + 10(Tutor) - 2(StudyHours &times; Tutor)</p>
+<p>where Tutor = 1 if student has a tutor, 0 if not.</p>
+<p><strong>Without tutor (Tutor = 0)</strong>: Score = 30 + 5(Hours) + 0 - 0 = 30 + 5(Hours)</p>
+<p>Each extra hour &rarr; 5 points more.</p>
+<p><strong>With tutor (Tutor = 1)</strong>: Score = 30 + 5(Hours) + 10 - 2(Hours) = 40 + 3(Hours)</p>
+<p>Each extra hour &rarr; only 3 points more (but starting higher at 40).</p>
+<p>The <strong>interaction coefficient (-2)</strong> tells us: having a tutor reduces the marginal benefit of each study hour by 2 points. Perhaps because the tutor makes studying more efficient, so fewer hours are needed.</p>
+<p><strong>KEY</strong>: When an interaction is present, you CANNOT interpret &beta;&#8321; = 5 as "the effect of study hours." The effect of study hours depends on Tutor. You must always specify the value of the other variable.</p>
+</div>
+
+<div class="story-block trap">
+<div class="label">Interaction Trap: Cannot Interpret Main Effects Alone</div>
+<p>When an interaction term X&#8321;&times;X&#8322; is in the model, the coefficients &beta;&#8321; and &beta;&#8322; are called <strong>main effects</strong>. You CANNOT interpret them in isolation. &beta;&#8321; is the effect of X&#8321; only when X&#8322; = 0. If X&#8322; = 0 is not meaningful (e.g., X&#8322; = age, and age 0 makes no sense), then &beta;&#8321; alone has no useful interpretation.</p>
+<p>Always interpret the interaction model as a whole, describing how the slope changes across levels of the other variable.</p>
+</div>
+
+<h3>Standardized Coefficients</h3>
+<div class="story-block">
+<div class="label">Comparing Apples to Oranges</div>
+<p>The unstandardized coefficient b&#8198;j depends on the units of X&#8198;j. Comparing b&#8321; = 3200 (dollars per year of experience) to b&#8322; = 12000 (dollars per education level) is meaningless because the scales are different.</p>
+<p>The <strong>standardized coefficient</strong> removes units:</p>
+<div class="formula">b* = b &middot; (s&#8339; / s&#7527;)</div>
+<p>b* tells you: "For a 1 standard deviation increase in X&#8198;j, Y changes by b* standard deviations, holding other variables constant."</p>
+<p>Now you CAN compare: the predictor with the largest |b*| has the strongest linear effect on Y (in relative terms). This is useful for variable importance ranking.</p>
+</div>
+
+<h3>Dummy Variables for Categorical Predictors</h3>
+<div class="story-block">
+<div class="label">How to Include Categories in Regression</div>
+<p>Regression requires numerical predictors. To include a categorical variable with g categories, create <strong>g - 1 dummy variables</strong> (also called indicator variables). Each dummy is 0 or 1.</p>
+<p>Example: Job sector has 3 levels: Tech, Finance, Other. Create 2 dummies:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>D&#8321; = 1 if Tech, 0 otherwise</li>
+<li>D&#8322; = 1 if Finance, 0 otherwise</li>
+<li>"Other" is the <strong>reference category</strong> (when D&#8321; = 0 and D&#8322; = 0)</li>
+</ul>
+<p>Model: &mu;&#7527; = &alpha; + &beta;&#8321;D&#8321; + &beta;&#8322;D&#8322;</p>
+<p>Interpretation: &beta;&#8321; is the difference in mean Y between Tech and Other. &beta;&#8322; is the difference between Finance and Other. The intercept &alpha; is the mean Y for the reference group (Other).</p>
+<p>You always need <strong>one fewer dummy</strong> than the number of categories. Using all g dummies creates perfect collinearity (they would sum to 1, which is the intercept).</p>
+</div>
+
+<h3>Multicollinearity</h3>
+<div class="story-block warning">
+<div class="label">When Predictors Are Too Correlated With Each Other</div>
+<p><strong>Multicollinearity</strong> occurs when two or more predictors are highly correlated with each other. Example: including both "height in cm" and "height in inches" &mdash; they carry the same information.</p>
+<p>Effects of multicollinearity:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>Standard errors of individual coefficients become <strong>very large</strong></li>
+<li>Individual t-tests may all be non-significant (each predictor looks unimportant given the other)</li>
+<li>BUT the overall F-test may still be significant (the predictors together explain a lot)</li>
+<li>Coefficients become unstable &mdash; adding or removing one observation can wildly change b&#8198;j</li>
+<li>R&sup2; remains reliable &mdash; the model's overall fit is not affected</li>
+</ul>
+<p><strong>The paradox</strong>: The overall F-test says "the model is useful" but individual t-tests say "no single predictor is significant." This apparent contradiction is a hallmark of multicollinearity.</p>
+<p><strong>Detection</strong>: Check correlations between predictors. If |r| > 0.8 between two predictors, multicollinearity is likely an issue.</p>
+<p><strong>Solution</strong>: Remove one of the correlated predictors, or combine them into a single index.</p>
+</div>
+
+<h3>Model Selection: Avoiding Overfitting</h3>
+<div class="story-block">
+<div class="label">More Predictors Is Not Always Better</div>
+<p><strong>Overfitting</strong> occurs when a model captures the noise in the training data rather than the true signal. An overfit model has high R&sup2; on the data it was built with but performs poorly on new data.</p>
+<p>Why R&sup2; is not enough for model selection: it always increases (or stays the same) when you add predictors, even useless ones. A model with n-1 predictors will have R&sup2; = 1 (perfect fit) but will be useless for prediction.</p>
+<p>Better approaches:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li><strong>PRESS statistic</strong> (Predicted Residual Sum of Squares): Uses leave-one-out cross-validation. For each observation, fit the model without it and predict it. PRESS = &Sigma;(y&#7522; - y&#770;_(&#7522;))&sup2;. Lower PRESS = better predictive ability. Unlike R&sup2;, PRESS penalizes overfitting because an overfit model predicts the left-out observations poorly.</li>
+<li><strong>F-test for nested models</strong>: Tests whether adding predictors significantly improves the model (see above).</li>
+<li><strong>AIC/BIC/MDL</strong>: Information criteria that balance fit against complexity. They add a penalty for each extra parameter. Lower is better.</li>
+</ul>
+</div>
+
+<h3>Simpson's Paradox in the Regression Context</h3>
+<div class="story-block">
+<div class="label">The Full Resolution</div>
+<p>Remember Simpson's paradox from Chapter 1? An association can reverse when you control for a third variable. Multiple regression is the mathematical tool that resolves this.</p>
+<p>In simple regression of Y on X&#8321;, the slope captures the <strong>total</strong> association &mdash; including the effect of any lurking variable that is correlated with both X&#8321; and Y. In multiple regression of Y on X&#8321; and X&#8322;, the partial slope of X&#8321; captures only the <strong>direct</strong> effect, adjusted for X&#8322;.</p>
+</div>
+
+<div class="story-block example">
+<div class="label">Simpson's Paradox Resolved</div>
+<p><strong>Simple regression</strong>: Salary = a + b(Gender). Suppose b = -8000, suggesting women earn $8,000 less.</p>
+<p><strong>Multiple regression</strong>: Salary = a + b&#8321;(Gender) + b&#8322;(Department). Now b&#8321; = -1000.</p>
+<p>What happened? Women are concentrated in lower-paying departments. The simple regression blamed the entire $8,000 gap on gender, but most of it was actually due to departmental differences. After controlling for department, the gender gap shrinks to $1,000.</p>
+<p>This is exactly Simpson's paradox: the apparent effect of gender reverses (or shrinks dramatically) when you account for the confounding variable (department).</p>
+<p>This is why multiple regression is so powerful for observational data &mdash; it lets you <strong>statistically control</strong> for confounders, even when you cannot run an experiment.</p>
+</div>
+
+<div class="story-block insight">
+<div class="label">The Big Picture: How It All Connects</div>
+<p>Chapter 1 taught you that data collection determines what you can conclude. Chapters 2-3 described data and relationships. Chapter 4 built the regression model. Chapter 5 gave the theoretical foundation for inference. Chapter 6 provided the hypothesis testing framework. Chapters 7-8 applied it to specific comparison problems. And now Chapter 9 shows how multiple regression ties everything together:</p>
+<ul style="margin-left:20px;margin-top:8px;">
+<li>It uses the same least squares principle as Chapter 4</li>
+<li>It relies on the same sampling distributions from Chapter 5</li>
+<li>Individual coefficients are tested with the same t-test framework from Chapter 6</li>
+<li>Group comparisons from Chapter 7 are special cases (dummy variables)</li>
+<li>The chi-squared association from Chapter 8 motivates controlling for confounders</li>
+<li>And Simpson's paradox from Chapter 1 is finally resolved</li>
+</ul>
+<p>Everything connects. That is the story of statistics.</p>
+</div>
+`
+  }
+];
+
+let chaptersRead = new Set(saved.chaptersRead || []);
+function renderChapters() {
+  const nav = document.getElementById('chapter-nav');
+  nav.innerHTML = chapters.map((ch, i) =>
+    `<button onclick="showChapter(${i})" class="${chaptersRead.has(i)?'done':''}" id="ch-btn-${i}">${ch.title}</button>`
+  ).join('');
+  showChapterContent(0);
+}
+function showChapterContent(i) {
+  document.querySelectorAll('.chapter-nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(`ch-btn-${i}`).classList.add('active');
+  document.getElementById('story-content').innerHTML = `<div class="fade-in">${chapters[i].content}</div>`;
+}
+function showChapter(i) {
+  showChapterContent(i);
+  chaptersRead.add(i);
+  document.getElementById(`ch-btn-${i}`).classList.add('done');
+  saveProgress({ chaptersRead: [...chaptersRead] });
+  updateDashboard();
+}
+renderChapters();
+
+// ==================== TEST SELECTION TRAINER ====================
+const ttQuestions = [
+  { q: "A researcher wants to know if the proportion of left-handed CS students differs from 10%.", hint: "One group, one categorical variable, testing against a known value.", ans: "z1", explain: "One proportion tested against a hypothesized value \u2192 z-test for proportion." },
+  { q: "Compare average exam scores between students who attended tutorials and those who didn't.", hint: "Two independent groups, quantitative response.", ans: "t2", explain: "Two independent groups, quantitative response (exam scores) \u2192 independent two-sample t-test." },
+  { q: "Measure blood pressure before and after medication for the same 30 patients.", hint: "Same subjects, two measurements.", ans: "tp", explain: "Same subjects measured twice (before/after) \u2192 paired t-test. Compute differences first." },
+  { q: "Test whether gender and preferred programming language are related.", hint: "Both variables are categorical.", ans: "chi", explain: "Two categorical variables \u2192 chi-squared test of independence." },
+  { q: "Predict house price from square footage.", hint: "One quantitative X predicting one quantitative Y.", ans: "reg", explain: "One explanatory \u2192 one response, both quantitative \u2192 simple regression t-test for slope \u03b2." },
+  { q: "Does adding number of bedrooms improve a model that already has square footage?", hint: "Comparing two regression models, one is a subset of the other.", ans: "f", explain: "Comparing nested models \u2192 F-test. Tests whether the extra predictor significantly reduces SSE." },
+  { q: "Is the proportion of smokers different between two cities?", hint: "Two groups, categorical response (smoker yes/no).", ans: "z2", explain: "Two independent groups, comparing two proportions \u2192 z-test for difference of proportions." },
+  { q: "A sample of 50 students \u2014 is their average study time more than 10 hours/week?", hint: "One group, quantitative variable, testing against a value.", ans: "t1", explain: "One sample mean tested against a hypothesized value \u2192 one-sample t-test." },
+  { q: "Test if the distribution of blood types in a sample matches the known population distribution (A: 42%, B: 10%, AB: 4%, O: 44%).", hint: "One categorical variable, testing against expected proportions.", ans: "chi", explain: "Single categorical variable tested against specified distribution \u2192 chi-squared goodness of fit test." },
+  { q: "Test whether a multiple regression model with 3 predictors (experience, education, industry) significantly predicts salary.", hint: "Testing whether ALL predictors together matter.", ans: "f", explain: "Overall model significance with multiple predictors \u2192 F-test (H\u2080: all \u03b2\u1d62 = 0)." },
+  { q: "A company claims their batteries last 500 hours. A consumer group tests 40 batteries and finds x\u0304 = 490, s = 30.", hint: "One sample, quantitative, testing a claim about the mean.", ans: "t1", explain: "One sample mean vs claimed value \u2192 one-sample t-test. H\u2080: \u03bc = 500." },
+  { q: "Does the effect of study hours on exam score depend on whether the student attended tutorials?", hint: "The question asks if one variable's effect DEPENDS on another.", ans: "f", explain: "\"Effect depends on\" = interaction. Test the interaction term using t-test on the coefficient, or F-test comparing models with/without interaction." },
+  { q: "Compare the proportion of defective items between Factory A and Factory B.", hint: "Two groups, categorical response (defective yes/no).", ans: "z2", explain: "Two independent groups, comparing proportions \u2192 z-test for difference of proportions." },
+  { q: "A teacher measures the same 20 students' typing speed at the start and end of a course.", hint: "Same students, two time points.", ans: "tp", explain: "Same subjects measured twice \u2192 paired t-test. The pairing is each student with themselves." },
+  { q: "Is there an association between income level (low/medium/high) and voting preference (Party A/B/C)?", hint: "Two categorical variables, 3\u00d73 table.", ans: "chi", explain: "Two categorical variables with multiple categories \u2192 chi-squared test of independence. df = (3-1)(3-1) = 4." },
+];
+
+const ttLabels = {
+  z1: "z-test (1 proportion)", z2: "z-test (2 proportions)", t1: "1-sample t-test",
+  t2: "2-sample t-test", tp: "Paired t-test", chi: "Chi-squared", reg: "Regression t-test", f: "F-test"
+};
+let ttOrder, ttIdx, ttCorrect, ttTotal;
+function ttStart() {
+  ttOrder = shuffle([...Array(ttQuestions.length).keys()]);
+  ttIdx = 0; ttCorrect = 0; ttTotal = 0;
+  document.getElementById('tt-card-wrap').classList.remove('hidden');
+  document.getElementById('tt-results').classList.add('hidden');
+  ttShow();
+}
+function ttShow() {
+  if (ttIdx >= ttOrder.length) { ttFinished(); return; }
+  const q = ttQuestions[ttOrder[ttIdx]];
+  document.getElementById('tt-scenario').textContent = q.q;
+  document.getElementById('tt-hint').textContent = q.hint;
+  const btns = document.getElementById('tt-buttons');
+  btns.innerHTML = Object.entries(ttLabels).map(([k,v]) => `<button class="btn" onclick="ttCheck('${k}')">${v}</button>`).join('');
+  document.getElementById('tt-feedback').style.display = 'none';
+  document.getElementById('tt-next').style.display = 'none';
+  document.getElementById('tt-card').className = 'card';
+  document.getElementById('tt-progress-text').textContent = `Question ${ttIdx+1} of ${ttOrder.length}`;
+  document.getElementById('tt-bar').style.width = `${(ttIdx/ttOrder.length)*100}%`;
+}
+function ttCheck(ans) {
+  const q = ttQuestions[ttOrder[ttIdx]];
+  const fb = document.getElementById('tt-feedback');
+  const card = document.getElementById('tt-card');
+  ttTotal++;
+  document.querySelectorAll('#tt-buttons .btn').forEach(b => { b.disabled = true; b.style.opacity = '0.5'; });
+  if (ans === q.ans) {
+    ttCorrect++;
+    card.className = 'card correct';
+    fb.style.background = 'var(--green-dim)'; fb.style.color = 'var(--green)';
+    fb.innerHTML = `<strong>Correct!</strong> ${q.explain}`;
+  } else {
+    card.className = 'card wrong';
+    fb.style.background = 'var(--red-dim)'; fb.style.color = 'var(--red)';
+    fb.innerHTML = `<strong>Wrong.</strong> Correct answer: <strong>${ttLabels[q.ans]}</strong>. ${q.explain}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById('tt-next').style.display = 'inline-block';
+  updateTTScore();
+}
+function ttNext() { ttIdx++; ttShow(); }
+function ttFinished() {
+  const pct = Math.round(ttCorrect/ttTotal*100);
+  document.getElementById('tt-card-wrap').classList.add('hidden');
+  document.getElementById('tt-results').classList.remove('hidden');
+  document.getElementById('tt-results-title').textContent = `Done! ${ttCorrect}/${ttTotal} correct (${pct}%)`;
+  document.getElementById('tt-results-text').textContent = pct >= 80 ? 'Great job! You know your tests.' : pct >= 50 ? 'Getting there \u2014 review the ones you missed.' : 'Keep practicing \u2014 read Chapter 6 & 7 again.';
+  document.getElementById('tt-bar').style.width = '100%';
+  saveProgress({ ttBest: Math.max(saved.ttBest || 0, ttCorrect) });
+  updateDashboard();
+}
+function ttRestart() { ttStart(); }
+function updateTTScore() {
+  const el = document.getElementById('tt-score');
+  const pct = ttTotal ? Math.round(ttCorrect/ttTotal*100) : 0;
+  el.textContent = `${ttCorrect}/${ttTotal}`;
+  el.className = `score-badge ${pct>=80?'good':pct>=50?'mid':'bad'}`;
+  updateDashboard();
+}
+ttStart();
+
+// ==================== FLASHCARDS ====================
+const fcCards = [
+  { prompt: "Slope b = ?", answer: "b = \u03a3(x\u1d62 \u2212 x\u0304)(y\u1d62 \u2212 \u0233) / \u03a3(x\u1d62 \u2212 x\u0304)\u00b2" },
+  { prompt: "Intercept a = ?", answer: "a = \u0233 \u2212 b\u00b7x\u0304" },
+  { prompt: "Standard error of slope se(b) = ?", answer: "se(b) = s / \u221a(\u03a3(x\u1d62 \u2212 x\u0304)\u00b2)  =  s / \u221aSS\u2093\u2093" },
+  { prompt: "Residual standard deviation s = ?", answer: "s = \u221a(SSE / (n\u22122))" },
+  { prompt: "r\u00b2 = ?", answer: "r\u00b2 = 1 \u2212 SSE/Total SS = Regression SS / Total SS" },
+  { prompt: "Correlation r from regression?", answer: "r = b \u00b7 (s\u2093 / s\u1d67)" },
+  { prompt: "z-test statistic for proportion?", answer: "z = (p\u0302 \u2212 \u03c0\u2080) / \u221a(\u03c0\u2080(1\u2212\u03c0\u2080)/n)" },
+  { prompt: "t-test statistic for mean?", answer: "t = (x\u0304 \u2212 \u03bc\u2080) / (s/\u221an), df = n\u22121" },
+  { prompt: "Chi-squared statistic?", answer: "\u03c7\u00b2 = \u03a3(f\u2092 \u2212 f\u2091)\u00b2 / f\u2091, df = (r\u22121)(c\u22121)" },
+  { prompt: "Expected count in contingency table?", answer: "f\u2091 = (row total \u00d7 column total) / n" },
+  { prompt: "F-test statistic (overall model)?", answer: "F = (R\u00b2/k) / ((1\u2212R\u00b2)/(n\u2212(k+1))), df\u2081=k, df\u2082=n\u2212(k+1)" },
+  { prompt: "Sample size for proportion?", answer: "n = \u03c0(1\u2212\u03c0) \u00b7 (z*/M)\u00b2 \u2014 round UP, use \u03c0=0.5 if unknown" },
+  { prompt: "Confidence interval (general form)?", answer: "estimate \u00b1 critical value \u00d7 standard error" },
+  { prompt: "Standardized coefficient b* = ?", answer: "b* = b \u00b7 (s\u2093 / s\u1d67)" },
+  { prompt: "Standard error of p\u0302 (for CI)?", answer: "se = \u221a(p\u0302(1\u2212p\u0302)/n)" },
+  { prompt: "Paired t-test statistic?", answer: "t = d\u0304 / (s_d/\u221an), df = n\u22121 (n = pairs)" },
+];
+
+let fcOrder, fcIdx, fcKnown, fcMissed;
+function fcStart(deck) {
+  fcOrder = deck || shuffle([...Array(fcCards.length).keys()]);
+  fcIdx = 0; fcKnown = new Set(saved.fcKnown || []); fcMissed = [];
+  document.getElementById('fc-done').classList.add('hidden');
+  document.getElementById('fc-card').style.display = 'flex';
+  document.getElementById('fc-keys').style.display = 'block';
+  fcShowCard();
+}
+function fcShowCard() {
+  if (fcIdx >= fcOrder.length) { fcFinish(); return; }
+  const c = fcCards[fcOrder[fcIdx]];
+  document.getElementById('fc-prompt').textContent = c.prompt;
+  document.getElementById('fc-answer').textContent = c.answer;
+  document.getElementById('fc-card').classList.remove('revealed');
+  document.getElementById('fc-btns').style.display = 'none';
+  document.getElementById('fc-hint').style.display = 'block';
+  document.getElementById('fc-progress-text').textContent = `Card ${fcIdx+1} of ${fcOrder.length}`;
+  document.getElementById('fc-bar').style.width = `${(fcIdx/fcOrder.length)*100}%`;
+}
+function fcReveal() {
+  if (document.getElementById('fc-card').classList.contains('revealed')) return;
+  document.getElementById('fc-card').classList.add('revealed');
+  document.getElementById('fc-btns').style.display = 'block';
+}
+function fcRate(got) {
+  if (got) { fcKnown.add(fcOrder[fcIdx]); } else { fcMissed.push(fcOrder[fcIdx]); fcKnown.delete(fcOrder[fcIdx]); }
+  fcIdx++;
+  fcShowCard();
+  updateFCScore();
+}
+function fcFinish() {
+  document.getElementById('fc-card').style.display = 'none';
+  document.getElementById('fc-btns').style.display = 'none';
+  document.getElementById('fc-keys').style.display = 'none';
+  document.getElementById('fc-done').classList.remove('hidden');
+  document.getElementById('fc-summary').textContent = `${fcKnown.size} known, ${fcMissed.length} need practice.`;
+  document.getElementById('fc-bar').style.width = '100%';
+  saveProgress({ fcKnown: [...fcKnown] });
+  updateDashboard();
+}
+function fcRestart() { if (fcMissed.length) fcStart(shuffle(fcMissed)); else fcRestartAll(); }
+function fcRestartAll() { fcStart(); }
+function updateFCScore() {
+  const el = document.getElementById('fc-score');
+  el.textContent = `${fcKnown.size} known`;
+  el.className = `score-badge ${fcKnown.size >= 12 ? 'good' : fcKnown.size >= 6 ? 'mid' : 'bad'}`;
+  updateDashboard();
+}
+
+// Keyboard shortcuts for flashcards
+document.addEventListener('keydown', function(e) {
+  const fcSection = document.getElementById('flashcards');
+  if (!fcSection.classList.contains('active')) return;
+  if (document.getElementById('fc-done').classList.contains('hidden') === false) return;
+  if (document.getElementById('fc-card').style.display === 'none') return;
+
+  if (e.code === 'Space') {
+    e.preventDefault();
+    fcReveal();
+  } else if (e.code === 'ArrowLeft' && document.getElementById('fc-card').classList.contains('revealed')) {
+    e.preventDefault();
+    fcRate(true);
+  } else if (e.code === 'ArrowRight' && document.getElementById('fc-card').classList.contains('revealed')) {
+    e.preventDefault();
+    fcRate(false);
+  }
+});
+
+fcStart();
+
+// ==================== TRUE/FALSE ====================
+const tfQuestions = [
+  { s: "r = 0.8 means 80% of the variability in Y is explained by X.", ans: false, explain: "r\u00b2 = 0.64, so only 64% is explained. You must SQUARE r to get the proportion of explained variability." },
+  { s: "We accept H\u2080 when the p-value is greater than \u03b1.", ans: false, explain: "We FAIL TO REJECT H\u2080 \u2014 never 'accept.' Absence of evidence is not evidence of absence." },
+  { s: "The chi-squared test can be one-sided.", ans: false, explain: "Chi-squared is ALWAYS two-sided. The test statistic is always positive and there's no directional alternative." },
+  { s: "Adding a predictor to a regression model can decrease R\u00b2.", ans: false, explain: "R\u00b2 can NEVER decrease when you add predictors. Even a useless predictor will increase R\u00b2 (by at least a tiny amount)." },
+  { s: "In a randomized experiment, correlation CAN be used to establish causation.", ans: true, explain: "Randomized experiments control for confounders, so significant associations CAN be interpreted as causal." },
+  { s: "A 95% CI means there's a 95% probability the true parameter is in the interval.", ans: false, explain: "The parameter is fixed \u2014 it either is or isn't in the interval. '95% confident' means the METHOD captures the true value 95% of the time across repeated samples." },
+  { s: "For paired data, we first compute differences, then do a one-sample t-test on those differences.", ans: true, explain: "Exactly right. Paired t-test = one-sample t-test on the differences d = x\u2081 - x\u2082." },
+  { s: "The correlation coefficient r is sensitive to outliers.", ans: true, explain: "Yes \u2014 a single extreme point can dramatically change r. This is why you always check the scatter plot." },
+  { s: "In a 2\u00d72 contingency table, \u03c7\u00b2 = z\u00b2 (for the two-sided test).", ans: true, explain: "Yes \u2014 the chi-squared test and z-test for two proportions are mathematically equivalent for 2\u00d72 tables." },
+  { s: "Standard error decreases as sample size increases.", ans: true, explain: "se = \u03c3/\u221an. As n increases, \u221an increases, so se decreases. Larger samples \u2192 more precise estimates." },
+  { s: "The p-value is the probability that H\u2080 is true.", ans: false, explain: "P-value = P(data this extreme or more | H\u2080 is true). It's about the DATA, not about H\u2080 being true." },
+  { s: "Simpson's paradox means an association reverses when controlling for a third variable.", ans: true, explain: "Exactly. The overall trend and within-group trends go in opposite directions due to a lurking variable." },
+  { s: "If a predictor is significant in simple regression, it will also be significant in multiple regression.", ans: false, explain: "A predictor can lose significance in multiple regression due to collinearity with other predictors." },
+  { s: "Standardized residuals greater than 2 (in absolute value) in contingency tables are noteworthy.", ans: false, explain: "The threshold is |z| > 3, not 2. This is a specific exam trap!" },
+  { s: "Publication bias occurs when only statistically significant results are published.", ans: true, explain: "Yes \u2014 this creates a distorted literature where effects appear larger than they really are (the file drawer problem)." },
+  { s: "The slope b tells you the correlation between X and Y.", ans: false, explain: "b is the slope (change in Y per unit change in X). r = b\u00b7(s\u2093/s\u1d67) \u2014 related but not the same. b has units, r doesn't." },
+  { s: "With n = 10, the Central Limit Theorem guarantees the sampling distribution of x\u0304 is Normal.", ans: false, explain: "CLT needs n > 30 (rule of thumb). With n = 10, you need the population itself to be approximately Normal." },
+  { s: "An odds ratio of 1 indicates no association between the variables.", ans: true, explain: "Odds ratio = 1 means equal odds in both groups \u2192 no association." },
+  { s: "The correlation coefficient r is unit-free.", ans: true, explain: "Yes \u2014 r doesn't depend on the units of X or Y. It's a standardized measure." },
+  { s: "If the 95% CI for \u03b2 contains 0, we reject H\u2080: \u03b2 = 0 at \u03b1 = 0.05.", ans: false, explain: "If the CI CONTAINS 0, we FAIL to reject. If it does NOT contain 0, we reject. CI and hypothesis test are consistent." },
+];
+
+let tfOrder, tfIdx, tfCorrect2, tfTotal2;
+function tfStart() {
+  tfOrder = shuffle([...Array(tfQuestions.length).keys()]);
+  tfIdx = 0; tfCorrect2 = 0; tfTotal2 = 0;
+  document.getElementById('tf-card-wrap').classList.remove('hidden');
+  document.getElementById('tf-results').classList.add('hidden');
+  tfShowQ();
+}
+function tfShowQ() {
+  if (tfIdx >= tfOrder.length) { tfFinish(); return; }
+  const q = tfQuestions[tfOrder[tfIdx]];
+  document.getElementById('tf-statement').textContent = q.s;
+  document.getElementById('tf-feedback').style.display = 'none';
+  document.getElementById('tf-next').style.display = 'none';
+  document.getElementById('tf-card').className = 'card';
+  document.getElementById('tf-true-btn').disabled = false;
+  document.getElementById('tf-false-btn').disabled = false;
+  document.getElementById('tf-progress-text').textContent = `Question ${tfIdx+1} of ${tfOrder.length}`;
+  document.getElementById('tf-bar').style.width = `${(tfIdx/tfOrder.length)*100}%`;
+}
+function tfAnswer(userAns) {
+  const q = tfQuestions[tfOrder[tfIdx]];
+  const fb = document.getElementById('tf-feedback');
+  const card = document.getElementById('tf-card');
+  tfTotal2++;
+  document.getElementById('tf-true-btn').disabled = true;
+  document.getElementById('tf-false-btn').disabled = true;
+  if (userAns === q.ans) {
+    tfCorrect2++;
+    card.className = 'card correct';
+    fb.style.background = 'var(--green-dim)'; fb.style.color = 'var(--green)';
+    fb.innerHTML = `<strong>Correct!</strong> ${q.explain}`;
+  } else {
+    card.className = 'card wrong';
+    fb.style.background = 'var(--red-dim)'; fb.style.color = 'var(--red)';
+    fb.innerHTML = `<strong>Wrong.</strong> The answer is <strong>${q.ans?'TRUE':'FALSE'}</strong>. ${q.explain}`;
+  }
+  fb.style.display = 'block';
+  document.getElementById('tf-next').style.display = 'inline-block';
+  updateTFScore();
+}
+function tfNext() { tfIdx++; tfShowQ(); }
+function tfFinish() {
+  const pct = Math.round(tfCorrect2/tfTotal2*100);
+  document.getElementById('tf-card-wrap').classList.add('hidden');
+  document.getElementById('tf-results').classList.remove('hidden');
+  document.getElementById('tf-results-title').textContent = `Done! ${tfCorrect2}/${tfTotal2} correct (${pct}%)`;
+  document.getElementById('tf-results-text').textContent = pct >= 80 ? 'Solid conceptual understanding!' : pct >= 50 ? 'Review the traps in The Story chapters.' : 'Go back to The Story \u2014 focus on the red "Exam Trap" boxes.';
+  document.getElementById('tf-bar').style.width = '100%';
+  saveProgress({ tfBest: Math.max(saved.tfBest || 0, tfCorrect2) });
+  updateDashboard();
+}
+function tfRestart() { tfStart(); }
+function updateTFScore() {
+  const el = document.getElementById('tf-score');
+  const pct = tfTotal2 ? Math.round(tfCorrect2/tfTotal2*100) : 0;
+  el.textContent = `${tfCorrect2}/${tfTotal2}`;
+  el.className = `score-badge ${pct>=80?'good':pct>=50?'mid':'bad'}`;
+  updateDashboard();
+}
+tfStart();
+
+// ==================== EXAM SIMULATOR ====================
+function showExamSolutions() {
+  document.querySelectorAll('.solution').forEach(s => s.classList.add('visible'));
+  const checks = [
+    { id: 'e1a', correct: 'convenience' },
+    { id: 'e1b', correct: 'nonresponse' },
+    { id: 'e1c', correct: '1068', type: 'text' },
+    { id: 'e2a', correct: 'tp' },
+    { id: 'e2b', correct: 'z2' },
+    { id: 'e2c', correct: 'f' },
+    { id: 'e2d', correct: 'chi' },
+  ];
+  checks.forEach(c => {
+    const el = document.getElementById(c.id);
+    if (!el) return;
+    const val = el.value.trim();
+    if (c.type === 'text') {
+      const isCorrect = val.replace(/[^0-9]/g, '') === c.correct;
+      if (val) {
+        el.style.borderColor = isCorrect ? 'var(--green)' : 'var(--red)';
+        el.classList.add(isCorrect ? 'graded-correct' : 'graded-wrong');
+      }
+    } else {
+      if (val === c.correct) {
+        el.style.borderColor = 'var(--green)';
+        el.style.color = 'var(--green)';
+      } else if (val) {
+        el.style.borderColor = 'var(--red)';
+        el.style.color = 'var(--red)';
+      }
+    }
+  });
+  ['e3a','e3b','e3c','e3d','e4','e5a','e5b','e5c'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value.trim()) {
+      el.style.borderColor = 'var(--blue)';
+      el.classList.add('graded-correct');
+    }
+  });
+}
+
+function resetExam() {
+  document.querySelectorAll('.solution').forEach(s => s.classList.remove('visible'));
+  ['e1a','e1b','e1c','e2a','e2b','e2c','e2d','e3a','e3b','e3c','e3d','e4','e5a','e5b','e5c'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = '';
+    el.style.borderColor = '';
+    el.style.color = '';
+    el.classList.remove('graded-correct', 'graded-wrong');
+  });
+}
+
+// ==================== DASHBOARD ====================
+function updateDashboard() {
+  document.getElementById('d-story').textContent = `${chaptersRead.size}/9`;
+  const ttDisplay = ttTotal > 0 ? `${ttCorrect}/${ttTotal}` : `${saved.ttBest || 0}/15`;
+  document.getElementById('d-tests').textContent = ttDisplay;
+  document.getElementById('d-formulas').textContent = `${fcKnown ? fcKnown.size : 0}/16`;
+  const tfDisplay = tfTotal2 > 0 ? `${tfCorrect2}/${tfTotal2}` : `${saved.tfBest || 0}/20`;
+  document.getElementById('d-tf').textContent = tfDisplay;
+
+  document.getElementById('dc-story').classList.toggle('complete', chaptersRead.size >= 9);
+  document.getElementById('dc-tests').classList.toggle('complete', ttCorrect >= 12 || (saved.ttBest || 0) >= 12);
+  document.getElementById('dc-formulas').classList.toggle('complete', fcKnown && fcKnown.size >= 12);
+  document.getElementById('dc-tf').classList.toggle('complete', tfCorrect2 >= 16 || (saved.tfBest || 0) >= 16);
+
+  const navBtns = document.querySelectorAll('#nav button');
+  navBtns.forEach(btn => {
+    const section = btn.dataset.section;
+    let done = false;
+    if (section === 'story') done = chaptersRead.size >= 9;
+    if (section === 'test-trainer') done = ttCorrect >= 12 || (saved.ttBest || 0) >= 12;
+    if (section === 'flashcards') done = fcKnown && fcKnown.size >= 12;
+    if (section === 'truefalse') done = tfCorrect2 >= 16 || (saved.tfBest || 0) >= 16;
+    btn.classList.toggle('completed', done);
+  });
+}
+updateDashboard();
+</script>
+</body>
+</html>

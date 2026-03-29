@@ -1892,7 +1892,7 @@ function App(){
   return(
     <div className="layout">
       <div className={`sidebar ${sideOpen?'open':''}`}>
-        <div className="sidebar-brand"><h1>STAT 2526</h1><span>Leiden University</span></div>
+        <div className="sidebar-brand"><h1>STAT 2526</h1><span>Leiden University</span><span style={{fontSize:9,color:'var(--text-muted)',opacity:0.5,marginTop:4}}>by Karim Jebara</span></div>
         {navs.map((n,i)=>{
           if(n==='_learn')return<div className="nav-group" key={i}><div className="nav-group-label">Learn</div></div>;
           if(n==='_understand')return<div className="nav-group" key={i}><div className="nav-group-label">Understand</div></div>;
